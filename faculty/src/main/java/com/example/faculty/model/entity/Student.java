@@ -1,9 +1,11 @@
 package com.example.faculty.model.entity;
 
+import com.example.faculty.dao.Identified;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Student extends User {
-
+public class Student extends User implements Identified<Integer>, Serializable {
 
     private int courseNum;
     private boolean enable;
@@ -12,8 +14,8 @@ public class Student extends User {
         super();
     }
 
-    public Student(Integer id, String firstName, String secondName, String lastName, String email, String password) {
-        super(id, firstName, secondName, lastName, email, password);
+    public Student(Integer id, String firstName, String secondName, String lastName, String email, String password, int roleId) {
+        super(id, firstName, secondName, lastName, email, password, roleId);
     }
 
     @Override

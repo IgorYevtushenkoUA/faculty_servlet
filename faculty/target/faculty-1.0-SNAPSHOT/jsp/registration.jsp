@@ -1,0 +1,41 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSP - Hello World</title>
+</head>
+<body>
+<h1>Register Form</h1>
+<form action="controller" method="post">
+    <input type="hidden" name="command" value="register">
+    <table style="with: 50%">
+        <tr>
+            <td>First Name</td>
+            <td><input type="text" name="firstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input type="text" name="lastName"/></td>
+        </tr>
+        <tr>
+            <td>Second Name</td>
+            <td><input type="text" name="secondName"/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" name="email"/></td>
+        </tr>
+        <tr>
+            <td>Course</td>
+            <td><input type="number" name="course"/></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" name="password"/></td>
+        </tr>
+
+    </table>
+    <input type="submit" value="Submit"/>
+</form>
+</body>
+</html>

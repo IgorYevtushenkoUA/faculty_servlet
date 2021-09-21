@@ -1,10 +1,13 @@
 package com.example.faculty.model.entity;
 
+import com.example.faculty.dao.Identified;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Role {
+public class Role implements Identified<Integer>, Serializable {
 
-    private int id;
+    private Integer id;
     private String name;
 
     public Role() {
@@ -40,11 +43,11 @@ public class Role {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,5 +1,8 @@
 package com.example.faculty.model.entity;
 
+import com.example.faculty.dao.Identified;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 

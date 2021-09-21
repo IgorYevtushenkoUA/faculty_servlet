@@ -3,4 +3,58 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+<!--    <filter>-->
+<!--        <filter-name>EncodingFilter</filter-name>-->
+<!--        <filter-class>com.example.faculty.filter.EncodingFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>EncodingFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
+
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>com.example.faculty.filter.AuthorizationFilter</filter-class>
+        <init-param>
+            <param-name>ROLE_ADMIN</param-name>
+            <param-value>
+                admin
+                add-course
+                add-teacher
+                edit-course
+                list-users
+                list-courses
+                block-student
+                unblock-student
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>ROLE_TEACHER</param-name>
+            <param-value>
+                teacher
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>ROLE_STUDENT</param-name>
+            <param-value>
+                student
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>ROLE_GUEST</param-name>
+            <param-value>
+                controller
+                language
+                login
+                register
+                courses
+            </param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <servlet-name>controller</servlet-name>
+    </filter-mapping>
+
 </web-app>

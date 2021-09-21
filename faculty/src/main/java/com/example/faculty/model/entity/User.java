@@ -1,8 +1,11 @@
 package com.example.faculty.model.entity;
 
+import com.example.faculty.dao.Identified;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Identified<Integer>, Serializable {
 
     private Integer id;
     private String firstName;
@@ -10,39 +13,45 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-
-    public User() {
-    }
-
-    public User(String firstName, String secondName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(Integer id, String firstName, String secondName, String lastName, String email, String password) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+    private int roleId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getId().equals(user.getId()) && getFirstName().equals(user.getFirstName()) && getSecondName().equals(user.getSecondName()) && getLastName().equals(user.getLastName()) && getEmail().equals(user.getEmail()) && getPassword().equals(user.getPassword());
+        return getRoleId() == user.getRoleId() && getId().equals(user.getId()) && getFirstName().equals(user.getFirstName()) && getSecondName().equals(user.getSecondName()) && getLastName().equals(user.getLastName()) && getEmail().equals(user.getEmail()) && getPassword().equals(user.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getSecondName(), getLastName(), getEmail(), getPassword());
+        return Objects.hash(getId(), getFirstName(), getSecondName(), getLastName(), getEmail(), getPassword(), getRoleId());
     }
+
+
+    public User() {
+    }
+
+    public User(String firstName, String secondName, String lastName, String email, String password, int roleId) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.setRoleId(roleId);
+    }
+
+    public User(Integer id, String firstName, String secondName, String lastName, String email, String password, int roleId) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.setRoleId(roleId);
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -92,6 +101,14 @@ public class User {
         this.password = password;
     }
 
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -101,6 +118,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", roleId=" + roleId +
                 '}';
     }
 }

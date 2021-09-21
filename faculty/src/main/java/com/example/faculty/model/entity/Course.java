@@ -1,10 +1,13 @@
 package com.example.faculty.model.entity;
 
+import com.example.faculty.dao.Identified;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Course {
+public class Course implements Identified<Integer>, Serializable {
 
-    private int id;
+    private Integer id;
     private Topic topic;
     private int capacity;
     private int semesterStart;
@@ -26,7 +29,7 @@ public class Course {
         this.name = name;
     }
 
-    public Course(int id, Topic topic, int capacity, int semesterStart, int semesterDuration, String description, Teacher teacher, String name) {
+    public Course(Integer id, Topic topic, int capacity, int semesterStart, int semesterDuration, String description, Teacher teacher, String name) {
         this.id = id;
         this.topic = topic;
         this.capacity = capacity;
@@ -64,11 +67,11 @@ public class Course {
         return Objects.hash(getId(), getTopic(), getCapacity(), getSemesterStart(), getSemesterDuration(), getDescription(), getTeacher(), getName());
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

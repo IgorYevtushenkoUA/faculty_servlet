@@ -1,0 +1,17 @@
+----- TODAY ---------
+- queries add
+- finish userDao
+- do registration post that add user
+- auth
+- do courses page with filter and pagination
+    * courseDao
+    * jsp
+- do courseIdPage
+- do navbar
+---------------------
+
+- do student page
+- do teacher page
+- do admin page
+- add language
+- add test

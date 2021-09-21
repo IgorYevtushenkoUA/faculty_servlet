@@ -1,10 +1,13 @@
 package com.example.faculty.model.entity;
 
+import com.example.faculty.dao.Identified;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Status {
+public class Status implements Identified<Integer>, Serializable {
 
-    private int id;
+    private Integer id;
     private String name;
 
     public Status() {
@@ -14,7 +17,7 @@ public class Status {
         this.name = name;
     }
 
-    public Status(int id, String name) {
+    public Status(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -40,11 +43,11 @@ public class Status {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
