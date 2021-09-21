@@ -5,7 +5,7 @@ import com.example.faculty.dao.Identified;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Identified<Integer>, Serializable {
+public class User implements Serializable {
 
     private Integer id;
     private String firstName;
@@ -28,8 +28,17 @@ public class User implements Identified<Integer>, Serializable {
         return Objects.hash(getId(), getFirstName(), getSecondName(), getLastName(), getEmail(), getPassword(), getRoleId());
     }
 
-
     public User() {
+    }
+
+    public User(User user){
+        this.id=user.getId();
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.setRoleId(user.getRoleId());
     }
 
     public User(String firstName, String secondName, String lastName, String email, String password, int roleId) {

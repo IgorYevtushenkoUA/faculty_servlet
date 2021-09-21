@@ -7,17 +7,14 @@ import com.example.faculty.model.entity.Student;
 import com.example.faculty.model.entity.Teacher;
 import com.example.faculty.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class UserDaoImpl implements UserDao {
 
-    public void prepareStatementForCreate(PreparedStatement stmt, User user) {
+    public void prepareStatementForCreateUser(PreparedStatement stmt, User user) {
         try {
             int i = 1;
             stmt.setString(i++, user.getFirstName());
@@ -26,6 +23,24 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(i++, user.getEmail());
             stmt.setString(i++, user.getPassword());
             stmt.setInt(i++, user.getRoleId());
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public void prepareStatementForCreateStudent(PreparedStatement stmt, Student student) {
+        try {
+            stmt.setInt(1, student.getId());
+            stmt.setInt(2, student.getCourseNum());
+            stmt.setBoolean(3, student.isEnable());
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public void prepareStatementForCreateTeacher(PreparedStatement stmt, Teacher teacher) {
+        try {
+            stmt.setInt(1, teacher.getId());
         } catch (SQLException e) {
 
         }
@@ -52,13 +67,12 @@ public class UserDaoImpl implements UserDao {
 
     public void prepareStatementForUpdate(PreparedStatement stmt, User user) {
         try {
-            int i = 1;
-            stmt.setString(i++, user.getFirstName());
-            stmt.setString(i++, user.getSecondName());
-            stmt.setString(i++, user.getLastName());
-            stmt.setString(i++, user.getEmail());
-            stmt.setString(i++, user.getPassword());
-            stmt.setInt(i++, user.getRoleId());
+            stmt.setString(1, user.getFirstName());
+            stmt.setString(2, user.getSecondName());
+            stmt.setString(3, user.getLastName());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getPassword());
+            stmt.setInt(6, user.getRoleId());
         } catch (SQLException e) {
         }
     }
@@ -98,8 +112,57 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean save(User user) {
-        return false;
+    synchronized public User saveUser(User user) {
+        System.out.println("saveUser daoIml");
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(Queries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatementForCreateUser(stmt, user);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                user.setId(Math.toIntExact(rs.getInt("id")));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return user;
+    }
+
+    @Override
+    synchronized public Student saveStudent(Student student) {
+        System.out.println("saveStudent daoIml + " + student);
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(Queries.INSERT_STUDENT)) {
+            prepareStatementForCreateStudent(stmt, student);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return student;
+    }
+
+    @Override
+    synchronized  public Teacher saveTeacher(Teacher teacher) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(Queries.INSERT_TEACHER, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatementForCreateTeacher(stmt, teacher);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return teacher;
     }
 
     @Override

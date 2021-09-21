@@ -1,5 +1,6 @@
 package com.example.faculty.filter;
 
+import com.example.faculty.controller.constant.PageConstants;
 import com.example.faculty.controller.constant.PathConstants;
 import com.example.faculty.model.entity.Role;
 import com.example.faculty.model.entity.User;
@@ -22,7 +23,6 @@ public class AuthorizationFilter implements Filter {
         accessMap.put(ROLE.ROLE_ADMIN, asList(filterConfig.getInitParameter(ROLE.ROLE_ADMIN.name())));
         accessMap.put(ROLE.ROLE_TEACHER, asList(filterConfig.getInitParameter(ROLE.ROLE_TEACHER.name())));
         accessMap.put(ROLE.ROLE_STUDENT, asList(filterConfig.getInitParameter(ROLE.ROLE_STUDENT.name())));
-//        accessMap.put(ROLE.ROLE_GUEST, asList(filterConfig.getInitParameter(ROLE.ROLE_GUEST.name())));
         forAll.addAll(asList(filterConfig.getInitParameter(ROLE.ROLE_GUEST.name())));
     }
 
@@ -54,7 +54,7 @@ public class AuthorizationFilter implements Filter {
             System.out.println("not isAllow");
             String errorMessage = "You do not have permission to access the requested command!";
             servletRequest.setAttribute("error_message", errorMessage);
-            servletRequest.getRequestDispatcher(PathConstants.ERROR_PAGE).forward(servletRequest, servletResponse);
+            servletRequest.getRequestDispatcher(PageConstants.ERROR).forward(servletRequest, servletResponse);
         }
     }
 
@@ -64,9 +64,6 @@ public class AuthorizationFilter implements Filter {
         while (st.hasMoreElements()) {
             list.add(st.nextToken());
         }
-        System.out.println("---- ATTENTION ----");
-        System.out.println(list);
-        System.out.println("-------------------");
         return list;
     }
 

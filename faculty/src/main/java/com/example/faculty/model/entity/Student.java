@@ -14,6 +14,12 @@ public class Student extends User implements Identified<Integer>, Serializable {
         super();
     }
 
+    public Student(User user, int courseNum) {
+        super(user);
+        this.courseNum = courseNum;
+        this.enable = true;
+    }
+
     public Student(Integer id, String firstName, String secondName, String lastName, String email, String password, int roleId) {
         super(id, firstName, secondName, lastName, email, password, roleId);
     }

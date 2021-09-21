@@ -5,9 +5,11 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1>
+    <%= "Courses Page with filter" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="controller?command=login">login</a>
+<a href="controller?command=register">register</a>
 </body>
 </html>

@@ -5,7 +5,7 @@ import com.example.faculty.dao.Identified;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Course implements Identified<Integer>, Serializable {
+public class Course implements Serializable {
 
     private Integer id;
     private Topic topic;

@@ -1,15 +1,15 @@
 ----- TODAY ---------
 - queries add
-- finish userDao
-- do registration post that add user
-- auth
-- do courses page with filter and pagination
++ finish userDao
++ auth
++ do registration post that create user
+- do create student
+- do courses page with filter
     * courseDao
     * jsp
 - do courseIdPage
 - do navbar
 ---------------------
-
 - do student page
 - do teacher page
 - do admin page

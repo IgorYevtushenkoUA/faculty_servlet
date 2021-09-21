@@ -14,7 +14,7 @@ public class Queries {
     public static final String DELETE_TEACHER_FROM_COURSE = ""; // deleteTeacherFromCourse()
     public static final String SELECT_ALL_STUDENT_COURSES_BY_TYPE = ""; // findAllStudentCoursesByType
     // ROLE
-    public static final String SELECT_ROLE_BY_NAME = "";
+    public static final String SELECT_ROLE_BY_ID = "select * from role r where r.id=?";
     // STATUS
     public static final String SELECT_STATUS_BY_NAME = "";
     // STUDENT_HAS_COURSE
@@ -28,17 +28,19 @@ public class Queries {
     // USER
     public static final String SELECT_ALL_USERS = "select * from users";
     public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "select * from users u where u.email=? and u.password=?";
-    public static final String SELECT_USER_BY_EMAIL = "select * from user u where u.email=?";
+    public static final String SELECT_USER_BY_EMAIL = "select * from users u where u.email=?";
     public static final String SELECT_USER_BY_ID = "select * from users u where u.id = ?";
-    public static final String INSERT_USER = "insert into user (first_name, second_name, last_name, email, password, role_id) values (?,?,?,?,?,?)";
-    public static final String SELECT_TEACHER_BY_PIB = "select * from user u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=2";
-    public static final String SELECT_TEACHER_BY_ID = "select * from user u where u.id=?";
-    public static final String SELECT_ALL_TEACHERS = "select * from user u where u.role_id=2";
-    public static final String SELECT_ALL_STUDENTS = "select * from user u where u.role_id=3";
+    public static final String INSERT_USER = "insert into users (first_name, second_name, last_name, email, password, role_id) values (?,?,?,?,?,?)";
+    public static final String INSERT_TEACHER = "insert into teacher (id) values (?)";
+    public static final String INSERT_STUDENT = "insert into student (id, course_num, enable) values (?,?,?)";
+    public static final String SELECT_TEACHER_BY_PIB = "select * from users u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=2";
+    public static final String SELECT_TEACHER_BY_ID = "select * from users u where u.id=?";
+    public static final String SELECT_ALL_TEACHERS = "select * from users u where u.role_id=2";
+    public static final String SELECT_ALL_STUDENTS = "select * from users u where u.role_id=3";
     public static final String SELECT_STUDENT_INFO_BY_ID_AND_COURSE_ID = "";// ТУТ ТРОЗИНЕ ЗРОЗУМІЛО ЧОМУ Я ПИСАВ ЗА КУРСОМ, ЯКЩО БЕЗ КУРСУ МОЖНА
-    public static final String SELECT_STUDENT_BY_ID = "select * from user u where u.id=?";
-    public static final String SELECT_STUDENT_BY_PIB = "select * from user u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=3";
-    public static final String SELECT_ENROLLED_STUDENT_TO_COURSE = "select u from user u inner join student_has_course shc on shc.user_id=u.id and shc.course_id=?";
+    public static final String SELECT_STUDENT_BY_ID = "select * from users u where u.id=?";
+    public static final String SELECT_STUDENT_BY_PIB = "select * from users u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=3";
+    public static final String SELECT_ENROLLED_STUDENT_TO_COURSE = "select u from users u inner join student_has_course shc on shc.user_id=u.id and shc.course_id=?";
     public static final String UPDATE_USER="";
 
 }

@@ -13,6 +13,10 @@ public class Teacher extends User implements Identified<Integer>, Serializable {
         super();
     }
 
+    public Teacher(User user){
+        super(user);
+    }
+
     @Override
     public String toString() {
         return "Teacher{\n" + super.toString() + "\n}";

@@ -12,7 +12,11 @@ public interface UserDao {
 
     User findById(int id);
 
-    boolean save(User user);
+    User saveUser(User user);
+
+    Student saveStudent(Student student);
+
+    Teacher saveTeacher(Teacher teacher);
 
     List<Teacher> findAllTeachersByPIB(String name);
 
