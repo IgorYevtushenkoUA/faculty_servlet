@@ -62,7 +62,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> findAll() {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_COURSES)) {
             courses = parseResultSet(ps.executeQuery());
@@ -78,7 +78,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public Course findById(int id) {
-        Course course = null;
+        Course course = new Course();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_COURSE_BY_ID)) {
             ps.setInt(1, id);
@@ -154,15 +154,9 @@ public class CourseDaoImpl implements CourseDao {
                                            List<Integer> topic,
                                            List<Integer> teacher) {
         i = 1;
-        List<Course> courses = null;
-        System.out.println(" in findCOursesBYParams");
-        String sql = "select *\n" +
-                "from course c\n" +
-                "where lower(c.name) like lower(concat('%','" + courseName + "','%'))\n" +
-                "  and c.semester_duration in (" + String.join(", ", duration.stream().map(Object::toString).collect(Collectors.toList())) + ")\n" +
-                "  and c.capacity in ("+String.join(", ", capacity.stream().map(Object::toString).collect(Collectors.toList())) + ")\n" +
-                "  and c.topic_id in (" +String.join(", ", topic.stream().map(Object::toString).collect(Collectors.toList())) + ")\n" +
-                "  and c.teacher_id in ("+String.join(", ", teacher.stream().map(Object::toString).collect(Collectors.toList()))+")";
+        List<Course> courses = new ArrayList<>();
+        System.out.println(" in findCoursesByParams");
+        String sql = buildSQL(courseName, duration, capacity, topic, teacher);
         System.out.println(sql);
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -179,9 +173,26 @@ public class CourseDaoImpl implements CourseDao {
         return courses;
     }
 
+    private String buildSQL(String courseName,
+                            List<Integer> duration,
+                            List<Integer> capacity,
+                            List<Integer> topic,
+                            List<Integer> teacher) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select *\n");
+        sql.append("from course c\n");
+        sql.append("where lower(c.name) like lower(concat('%','" + courseName + "','%'))\n");
+        sql.append(duration.isEmpty() ? ("  and c.semester_duration in (0)\n") : ("  and c.semester_duration in (" + String.join(", ", duration.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
+        sql.append(capacity.isEmpty() ? ("  and c.capacity in (0)\n") : ("  and c.capacity in (" + String.join(", ", capacity.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
+        sql.append(topic.isEmpty() ? ("  and c.topic_id in (0)\n") : ("  and c.topic_id in (" + String.join(", ", topic.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
+        sql.append(teacher.isEmpty() ? ("  and c.teacher_id in (0)") : ("  and c.teacher_id in (" + String.join(", ", teacher.stream().map(Object::toString).collect(Collectors.toList())) + ")"));
+        System.out.println(sql);
+        return sql.toString();
+    }
+
     @Override
     public List<Course> findAllTeachersCourses(int teacherId) {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_TEACHERS_COURSES)) {
             ps.setInt(1, teacherId);
@@ -232,7 +243,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public Course deleteTeacherFromCourse(int teacherId, int courseId) {
-        Course course = null;
+        Course course = new Course();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.DELETE_TEACHER_FROM_COURSE)) {
             course = findById(courseId);
@@ -252,7 +263,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> findAllStudentCoursesByType(String type) {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_STUDENT_COURSES_BY_TYPE)) {
             ps.setString(1, type);

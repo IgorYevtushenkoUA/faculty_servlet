@@ -105,7 +105,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByEmail(String email) {
-        User user = null;
+        User user = new User();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.SELECT_USER_BY_EMAIL)) {
             stmt.setString(1, email);
@@ -122,7 +122,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(int id) {
-        User user = null;
+        User user = new User();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
             stmt.setInt(1, id);

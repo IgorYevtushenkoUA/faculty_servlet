@@ -42,7 +42,7 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findById(int id) {
-        Role role = null;
+        Role role = new Role();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.SELECT_ROLE_BY_ID)) {
             stmt.setInt(1, id);
@@ -59,7 +59,7 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findByName(String name) {
-        Role role = null;
+        Role role = new Role();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.SELECT_ROLE_BY_NAME)) {
             stmt.setString(1, name);

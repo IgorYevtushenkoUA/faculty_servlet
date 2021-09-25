@@ -41,7 +41,7 @@ public class StatusDaoImpl implements StatusDao {
 
     @Override
     public Status findById(int id) {
-        Status status = null;
+        Status status = new Status();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_STATUS_BY_ID)) {
             ps.setInt(1,id);
@@ -58,7 +58,7 @@ public class StatusDaoImpl implements StatusDao {
 
     @Override
     public Status findByName(String name) {
-        Status status = null;
+        Status status = new Status();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_STATUS_BY_NAME)) {
             ps.setString(1,name);

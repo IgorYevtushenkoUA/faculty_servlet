@@ -3,7 +3,6 @@ package com.example.faculty.dao.model.impl;
 import com.example.faculty.dao.model.TopicDao;
 import com.example.faculty.db.ConnectionPool;
 import com.example.faculty.db.Queries;
-import com.example.faculty.model.entity.Status;
 import com.example.faculty.model.entity.Topic;
 
 import java.sql.Connection;
@@ -43,7 +42,7 @@ public class TopicDaoImpl implements TopicDao {
 
     @Override
     public Topic findByName(String name) {
-        Topic topic = null;
+        Topic topic = new Topic();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_TOPIC_BY_NAME)) {
             ps.setString(1, name);
@@ -76,7 +75,7 @@ public class TopicDaoImpl implements TopicDao {
 
     @Override
     public Topic findById(int id) {
-        Topic topic = null;
+        Topic topic = new Topic();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_TOPIC_BY_ID)) {
             ps.setInt(1, id);
