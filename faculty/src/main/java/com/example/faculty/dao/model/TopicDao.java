@@ -9,4 +9,6 @@ public interface TopicDao {
     Topic findByName(String name);
 
     List<Topic> findAll();
+
+    Topic findById(int id);
 }

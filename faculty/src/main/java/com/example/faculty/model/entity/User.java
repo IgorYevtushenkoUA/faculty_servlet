@@ -1,11 +1,8 @@
 package com.example.faculty.model.entity;
 
-import com.example.faculty.dao.Identified;
-
-import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Serializable {
+public class User {
 
     private Integer id;
     private String firstName;

@@ -3,7 +3,7 @@
 + finish userDao
 + auth
 + do registration post that create user
-- do create student
++ do create student
 - do courses page with filter
     * courseDao
     * jsp

@@ -1,14 +1,12 @@
 package com.example.faculty.filter;
 
 import com.example.faculty.controller.constant.PageConstants;
-import com.example.faculty.controller.constant.PathConstants;
-import com.example.faculty.model.entity.Role;
-import com.example.faculty.model.entity.User;
+import com.example.faculty.dao.model.*;
+import com.example.faculty.dao.model.impl.*;
 import com.example.faculty.model.enums.ROLE;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
@@ -20,10 +18,27 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        doTest();
         accessMap.put(ROLE.ROLE_ADMIN, asList(filterConfig.getInitParameter(ROLE.ROLE_ADMIN.name())));
         accessMap.put(ROLE.ROLE_TEACHER, asList(filterConfig.getInitParameter(ROLE.ROLE_TEACHER.name())));
         accessMap.put(ROLE.ROLE_STUDENT, asList(filterConfig.getInitParameter(ROLE.ROLE_STUDENT.name())));
         forAll.addAll(asList(filterConfig.getInitParameter(ROLE.ROLE_GUEST.name())));
+    }
+
+    private static void doTest() {
+        System.out.println("----- START ---");
+        CourseDao courseDao = new CourseDaoImpl();
+        RoleDao roleDao = new RoleDaoImpl();
+        StatusDao statusDao = new StatusDaoImpl();
+        StudentHasCourseDao studentHasCourseDao = new StudentHasCourseDaoImpl();
+        TopicDao topicDao = new TopicDaoImpl();
+        UserDao userDao = new UserDaoImpl();
+
+        System.out.println(topicDao.findAll());
+        System.out.println(topicDao.findByName("RIGHT"));
+        System.out.println(topicDao.findById(2));
+
+        System.out.println("----- END -----");
     }
 
     private boolean isAllowed(ServletRequest servletRequest) {

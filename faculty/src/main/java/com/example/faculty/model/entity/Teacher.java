@@ -1,10 +1,6 @@
 package com.example.faculty.model.entity;
 
-import com.example.faculty.dao.Identified;
-
-import java.io.Serializable;
-
-public class Teacher extends User implements Identified<Integer>, Serializable {
+public class Teacher extends User {
     public Teacher(Integer id, String firstName, String secondName, String lastName, String email, String password, int roleId) {
         super(id, firstName, secondName, lastName, email, password, roleId);
     }

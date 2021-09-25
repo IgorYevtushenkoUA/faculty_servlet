@@ -1,4 +1,327 @@
 package com.example.faculty.dao.model.impl;
 
-public class CourseDaoImpl {
+import com.example.faculty.dao.model.CourseDao;
+import com.example.faculty.db.ConnectionPool;
+import com.example.faculty.db.Queries;
+import com.example.faculty.model.entity.Course;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+public class CourseDaoImpl implements CourseDao {
+
+    int i = 1;
+
+    private void prepareStatementForCreateCourse(PreparedStatement ps, Course course) {
+        i = 1;
+        try {
+            ps.setInt(i++, course.getTopicId());
+            ps.setInt(i++, course.getCapacity());
+            ps.setInt(i++, course.getSemesterStart());
+            ps.setInt(i++, course.getSemesterDuration());
+            ps.setString(i++, course.getDescription());
+            ps.setInt(i++, course.getTeacherId());
+            ps.setString(i++, course.getName());
+        } catch (SQLException e) {
+        }
+    }
+
+    private List<Course> parseResultSet(ResultSet rs) {
+        List<Course> courses = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Course course = new Course();
+                course.setId(rs.getInt("id"));
+                course.setTopicId(rs.getInt("topic_id"));
+                course.setCapacity(rs.getInt("capacity"));
+                course.setSemesterStart(rs.getInt("semester_start"));
+                course.setSemesterDuration(rs.getInt("semester_duration"));
+                course.setDescription(rs.getString("description"));
+                course.setTeacherId(rs.getInt("teacher_id"));
+                course.setName(rs.getString("name"));
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+        }
+        return courses;
+    }
+
+    private List<Integer> parseResultSetForList(ResultSet rs, String columnLabel) {
+        List<Integer> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                list.add(rs.getInt(columnLabel));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    @Override
+    public List<Course> findAll() {
+        List<Course> courses = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_COURSES)) {
+            courses = parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return courses;
+    }
+
+    @Override
+    public Course findById(int id) {
+        Course course = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_COURSE_BY_ID)) {
+            ps.setInt(1, id);
+            course = parseResultSet(ps.executeQuery()).iterator().next();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return course;
+    }
+
+    @Override
+    public List<Course> findByName(String name) {
+        List<Course> list = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_COURSE_BY_NAME)) {
+            ps.setString(1, name);
+            list = parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return list;
+    }
+
+
+    @Override
+    public Course addCourse(Course course) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.INSERT_COURSE, Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatementForCreateCourse(ps, course);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                course.setId(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return course;
+    }
+
+    @Override
+    public Course updateCourse(Course course) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_COURSE)) {
+             prepareStatementForCreateCourse(ps, course);
+            parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return course;
+    }
+
+    @Override
+    public List<Course> findCourseByParams(String courseName,
+                                           List<Integer> duration,
+                                           List<Integer> capacity,
+                                           List<Integer> topic,
+                                           List<Integer> teacherId) {
+        i = 1;
+        List<Course> courses = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_COURSES_BY_PARAMS)) {
+            ps.setString(i++, courseName);
+            ps.setArray(i++, ps.getConnection().createArrayOf("integer", duration.toArray()));
+            ps.setArray(i++, ps.getConnection().createArrayOf("integer", capacity.toArray()));
+            ps.setArray(i++, ps.getConnection().createArrayOf("VARCHAR", topic.toArray()));
+            ps.setArray(i++, ps.getConnection().createArrayOf("integer", topic.toArray()));
+            courses = parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return courses;
+    }
+
+    @Override
+    public List<Course> findAllTeachersCourses(int teacherId) {
+        List<Course> courses = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_TEACHERS_COURSES)) {
+            ps.setInt(1, teacherId);
+            courses = parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return courses;
+    }
+
+    @Override
+    public boolean deleteCourseById(int id) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.DELETE_COURSE_BY_ID)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addTeacherToCourse(int courseId, int teacherId) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.INSERT_TEACHER_TO_COURSE)) {
+            Course course = findById(courseId);
+            course.setTeacherId(teacherId);
+            prepareStatementForCreateCourse(ps, course);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return false;
+    }
+
+    @Override
+    public Course deleteTeacherFromCourse(int teacherId, int courseId) {
+        Course course = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.DELETE_TEACHER_FROM_COURSE)) {
+            course = findById(courseId);
+            course.setTeacherId(null);
+            prepareStatementForCreateCourse(ps, course);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return course;
+    }
+
+
+    @Override
+    public List<Course> findAllStudentCoursesByType(String type) {
+        List<Course> courses = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_STUDENT_COURSES_BY_TYPE)) {
+            ps.setString(1, type);
+            courses = parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return courses;
+    }
+
+    public List<Integer> setDurationList(Integer duration) {
+        List<Integer> list = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
+            ps.setInt(1, duration);
+            list = parseResultSetForList(ps.executeQuery(), "duration");
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return list;
+    }
+
+    public List<Integer> setCapacityList(Integer capacity) {
+        List<Integer> list = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
+            ps.setInt(1, capacity);
+            list = parseResultSetForList(ps.executeQuery(), "capacity");
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return list;
+    }
+
+    public List<Integer> setTopicList(Integer topic) {
+        List<Integer> list = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
+            ps.setInt(1, topic);
+            list = parseResultSetForList(ps.executeQuery(), "topic_id");
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return list;
+    }
+
+    public List<Integer> setTeacherList(Integer teacher) {
+        List<Integer> list = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
+            ps.setInt(1, teacher);
+            list = parseResultSetForList(ps.executeQuery(), "teacher_id");
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return list;
+    }
+
 }

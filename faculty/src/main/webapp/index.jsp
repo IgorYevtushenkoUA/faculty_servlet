@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>
-    <%= "Courses Page with filter" %>
+    <%= "Index Page" %>
 </h1>
 <br/>
 <a href="controller?command=login">login</a>

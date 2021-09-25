@@ -1,42 +1,39 @@
 package com.example.faculty.model.entity;
 
-import com.example.faculty.dao.Identified;
-
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Course implements Serializable {
+public class Course{
 
     private Integer id;
-    private Topic topic;
+    private int topicId;
     private int capacity;
     private int semesterStart;
     private int semesterDuration;
     private String description;
-    private Teacher teacher;
+    private Integer teacherId;
     private String name;
 
     public Course() {
     }
 
-    public Course(Topic topic, int capacity, int semesterStart, int semesterDuration, String description, Teacher teacher, String name) {
-        this.topic = topic;
+    public Course(int topicId, int capacity, int semesterStart, int semesterDuration, String description, Integer teacherId, String name) {
+        this.topicId = topicId;
         this.capacity = capacity;
         this.semesterStart = semesterStart;
         this.semesterDuration = semesterDuration;
         this.description = description;
-        this.teacher = teacher;
+        this.teacherId = teacherId;
         this.name = name;
     }
 
-    public Course(Integer id, Topic topic, int capacity, int semesterStart, int semesterDuration, String description, Teacher teacher, String name) {
+    public Course(Integer id, Topic topic, int capacity, int semesterStart, int semesterDuration, String description, int teacherId, String name) {
         this.id = id;
-        this.topic = topic;
+        this.topicId = topicId;
         this.capacity = capacity;
         this.semesterStart = semesterStart;
         this.semesterDuration = semesterDuration;
         this.description = description;
-        this.teacher = teacher;
+        this.teacherId = teacherId;
         this.name = name;
     }
 
@@ -44,12 +41,12 @@ public class Course implements Serializable {
     public String toString() {
         return "Course{" +
                 "id=" + id +
-                ", topic=" + topic +
+                ", topicId=" + topicId +
                 ", capacity=" + capacity +
                 ", semesterStart=" + semesterStart +
                 ", semesterDuration=" + semesterDuration +
                 ", description='" + description + '\'' +
-                ", teacher=" + teacher +
+                ", teacherId=" + teacherId +
                 ", name='" + name + '\'' +
                 '}';
     }
@@ -59,12 +56,12 @@ public class Course implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Course)) return false;
         Course course = (Course) o;
-        return getId() == course.getId() && getCapacity() == course.getCapacity() && getSemesterStart() == course.getSemesterStart() && getSemesterDuration() == course.getSemesterDuration() && getTopic().equals(course.getTopic()) && getDescription().equals(course.getDescription()) && getTeacher().equals(course.getTeacher()) && getName().equals(course.getName());
+        return getId() == course.getId() && getCapacity() == course.getCapacity() && getSemesterStart() == course.getSemesterStart() && getSemesterDuration() == course.getSemesterDuration() && getTopicId() == course.getTopicId() && getDescription().equals(course.getDescription()) && getTeacherId().equals(course.getTeacherId()) && getName().equals(course.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTopic(), getCapacity(), getSemesterStart(), getSemesterDuration(), getDescription(), getTeacher(), getName());
+        return Objects.hash(getId(), getTopicId(), getCapacity(), getSemesterStart(), getSemesterDuration(), getDescription(), getTeacherId(), getName());
     }
 
     public Integer getId() {
@@ -75,12 +72,12 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public int getTopicId() {
+        return this.topicId;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setTopicId(int topicId) {
+        this.topicId = topicId;
     }
 
     public int getCapacity() {
@@ -115,12 +112,12 @@ public class Course implements Serializable {
         this.description = description;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Integer getTeacherId() {
+        return this.teacherId;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getName() {

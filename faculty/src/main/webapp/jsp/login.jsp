@@ -1,14 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: i11am
-  Date: 20.09.2021
-  Time: 16:48
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <h1>Login Form</h1>
@@ -17,11 +11,11 @@
     <table style="with: 50%">
         <tr>
             <td>Email</td>
-            <td><input type="text" name="email"/></td>
+            <td><input type="text" name="email" value="s@gmail.com"/></td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="password" name="password"/></td>
+            <td><input type="password" name="password" value="p"/></td>
         </tr>
     </table>
     <input type="submit" value="Submit"/>

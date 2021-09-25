@@ -30,6 +30,7 @@ public abstract class CommandFactory implements ICommand {
     @Override
     public final String execute() throws ServletException {
         if (action == null) {
+            System.out.println("action is null");
             return PageConstants.COURSES;
         } else if (action == ACTION.GET) {
             return doGet();

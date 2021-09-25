@@ -9,11 +9,13 @@ public interface CourseDao {
 
     Course findById(int id);
 
-    boolean addCourse(Course course);
+    List<Course> findByName(String name);
 
-    void updateCourse(Course course);
+    Course addCourse(Course course);
 
-    List<Course> findCourseByParams(List<String> courseName, List<Integer> duration, List<Integer> capacity, List<String> topic, List<Integer> teacherId);
+    Course updateCourse(Course course);
+
+    List<Course> findCourseByParams(String courseName, List<Integer> duration, List<Integer> capacity, List<Integer> topic, List<Integer> teacherId);
 
     List<Course> findAllTeachersCourses(int teacherId);
 
@@ -21,7 +23,7 @@ public interface CourseDao {
 
     boolean addTeacherToCourse(int courseId, int teacherId);
 
-    boolean deleteTeacherFromCourse(int teacherId, int courseId);
+    Course deleteTeacherFromCourse(int teacherId, int courseId);
 
     List<Course> findAllStudentCoursesByType(String type);
 

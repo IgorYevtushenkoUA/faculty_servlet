@@ -15,19 +15,30 @@ import java.util.NoSuchElementException;
 
 public class RoleDaoImpl implements RoleDao {
 
-    public List<Role> parseResultSet(ResultSet rs) {
-        List<Role> list = new ArrayList<>();
+    int i = 0;
+
+    private void prepareStatementForCreateRole(PreparedStatement ps, Role role) {
+        i = 1;
+        try {
+            ps.setString(i++, role.getName());
+        } catch (SQLException e) {
+        }
+    }
+
+    private List<Role> parseResultSet(ResultSet rs) {
+        List<Role> roles = new ArrayList<>();
         try {
             while (rs.next()) {
                 Role role = new Role();
                 role.setId(rs.getInt("id"));
                 role.setName(rs.getString("name"));
-                list.add(role);
+                roles.add(role);
             }
         } catch (SQLException e) {
         }
-        return list;
+        return roles;
     }
+
 
     @Override
     public Role findById(int id) {
@@ -45,5 +56,23 @@ public class RoleDaoImpl implements RoleDao {
         }
         return role;
     }
+
+    @Override
+    public Role findByName(String name) {
+        Role role = null;
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(Queries.SELECT_ROLE_BY_NAME)) {
+            stmt.setString(1, name);
+            role = parseResultSet(stmt.executeQuery()).iterator().next();
+        } catch (SQLException e) {
+            System.out.println("SQLException e");
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println("NoSuchElementException e");
+        }
+        return role;
+    }
+
 
 }

@@ -14,33 +14,37 @@ import java.util.NoSuchElementException;
 
 public class UserDaoImpl implements UserDao {
 
-    public void prepareStatementForCreateUser(PreparedStatement stmt, User user) {
+    private int i = 0;
+
+    private void prepareStatementForCreateUser(PreparedStatement ps, User user) {
+        i = 1;
         try {
-            int i = 1;
-            stmt.setString(i++, user.getFirstName());
-            stmt.setString(i++, user.getSecondName());
-            stmt.setString(i++, user.getLastName());
-            stmt.setString(i++, user.getEmail());
-            stmt.setString(i++, user.getPassword());
-            stmt.setInt(i++, user.getRoleId());
+            ps.setString(i++, user.getFirstName());
+            ps.setString(i++, user.getSecondName());
+            ps.setString(i++, user.getLastName());
+            ps.setString(i++, user.getEmail());
+            ps.setString(i++, user.getPassword());
+            ps.setInt(i++, user.getRoleId());
         } catch (SQLException e) {
 
         }
     }
 
-    public void prepareStatementForCreateStudent(PreparedStatement stmt, Student student) {
+    private void prepareStatementForCreateStudent(PreparedStatement stmt, Student student) {
+        i = 1;
         try {
-            stmt.setInt(1, student.getId());
-            stmt.setInt(2, student.getCourseNum());
-            stmt.setBoolean(3, student.isEnable());
+            stmt.setInt(i++, student.getId());
+            stmt.setInt(i++, student.getCourseNum());
+            stmt.setBoolean(i++, student.isEnable());
         } catch (SQLException e) {
 
         }
     }
 
-    public void prepareStatementForCreateTeacher(PreparedStatement stmt, Teacher teacher) {
+    private void prepareStatementForCreateTeacher(PreparedStatement stmt, Teacher teacher) {
+        i = 1;
         try {
-            stmt.setInt(1, teacher.getId());
+            stmt.setInt(i++, teacher.getId());
         } catch (SQLException e) {
 
         }
@@ -65,14 +69,16 @@ public class UserDaoImpl implements UserDao {
         return list;
     }
 
-    public void prepareStatementForUpdate(PreparedStatement stmt, User user) {
+    // todo here code is duplicate with create [think]
+    public void prepareStatementForUpdate(PreparedStatement ps, User user) {
+        i = 1;
         try {
-            stmt.setString(1, user.getFirstName());
-            stmt.setString(2, user.getSecondName());
-            stmt.setString(3, user.getLastName());
-            stmt.setString(4, user.getEmail());
-            stmt.setString(5, user.getPassword());
-            stmt.setInt(6, user.getRoleId());
+            ps.setString(i++, user.getFirstName());
+            ps.setString(i++, user.getSecondName());
+            ps.setString(i++, user.getLastName());
+            ps.setString(i++, user.getEmail());
+            ps.setString(i++, user.getPassword());
+            ps.setInt(i++, user.getRoleId());
         } catch (SQLException e) {
         }
     }
@@ -120,7 +126,7 @@ public class UserDaoImpl implements UserDao {
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
-                user.setId(Math.toIntExact(rs.getInt("id")));
+                user.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
             System.out.println("SQLException e");
@@ -134,7 +140,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     synchronized public Student saveStudent(Student student) {
-        System.out.println("saveStudent daoIml + " + student);
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.INSERT_STUDENT)) {
             prepareStatementForCreateStudent(stmt, student);
@@ -150,7 +155,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    synchronized  public Teacher saveTeacher(Teacher teacher) {
+    synchronized public Teacher saveTeacher(Teacher teacher) {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.INSERT_TEACHER, Statement.RETURN_GENERATED_KEYS)) {
             prepareStatementForCreateTeacher(stmt, teacher);
