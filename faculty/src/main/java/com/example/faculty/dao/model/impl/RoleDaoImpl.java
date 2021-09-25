@@ -48,11 +48,11 @@ public class RoleDaoImpl implements RoleDao {
             stmt.setInt(1, id);
             role = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return role;
     }
@@ -65,11 +65,11 @@ public class RoleDaoImpl implements RoleDao {
             stmt.setString(1, name);
             role = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return role;
     }

@@ -11,7 +11,7 @@
 
 <div class="container">
     <div>
-        <form action="controller" method="post">
+        <form action="controller" method="get">
             <input type="hidden" name="command" value="courses">
             <div class="">
                 <div class="input-group p-1">
@@ -43,7 +43,8 @@
                            placeholder="ПІБ викладача">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Filter</button>
+<%--            <button type="submit" class="btn btn-primary btn-lg btn-block">Filter</button>--%>
+            <input type="submit" value="Filter">
         </form>
 
     </div>

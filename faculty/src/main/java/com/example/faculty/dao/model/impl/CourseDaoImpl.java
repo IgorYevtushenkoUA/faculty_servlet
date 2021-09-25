@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class CourseDaoImpl implements CourseDao {
 
@@ -66,11 +67,11 @@ public class CourseDaoImpl implements CourseDao {
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_COURSES)) {
             courses = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return courses;
     }
@@ -83,11 +84,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, id);
             course = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return course;
     }
@@ -100,11 +101,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setString(1, name);
             list = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return list;
     }
@@ -121,11 +122,11 @@ public class CourseDaoImpl implements CourseDao {
                 course.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return course;
     }
@@ -134,14 +135,14 @@ public class CourseDaoImpl implements CourseDao {
     public Course updateCourse(Course course) {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_COURSE)) {
-             prepareStatementForCreateCourse(ps, course);
+            prepareStatementForCreateCourse(ps, course);
             parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return course;
     }
@@ -151,23 +152,29 @@ public class CourseDaoImpl implements CourseDao {
                                            List<Integer> duration,
                                            List<Integer> capacity,
                                            List<Integer> topic,
-                                           List<Integer> teacherId) {
+                                           List<Integer> teacher) {
         i = 1;
         List<Course> courses = null;
+        System.out.println(" in findCOursesBYParams");
+        String sql = "select *\n" +
+                "from course c\n" +
+                "where lower(c.name) like lower(concat('%','" + courseName + "','%'))\n" +
+                "  and c.semester_duration in (" + String.join(", ", duration.stream().map(Object::toString).collect(Collectors.toList())) + ")\n" +
+                "  and c.capacity in ("+String.join(", ", capacity.stream().map(Object::toString).collect(Collectors.toList())) + ")\n" +
+                "  and c.topic_id in (" +String.join(", ", topic.stream().map(Object::toString).collect(Collectors.toList())) + ")\n" +
+                "  and c.teacher_id in ("+String.join(", ", teacher.stream().map(Object::toString).collect(Collectors.toList()))+")";
+        System.out.println(sql);
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_COURSES_BY_PARAMS)) {
-            ps.setString(i++, courseName);
-            ps.setArray(i++, ps.getConnection().createArrayOf("integer", duration.toArray()));
-            ps.setArray(i++, ps.getConnection().createArrayOf("integer", capacity.toArray()));
-            ps.setArray(i++, ps.getConnection().createArrayOf("VARCHAR", topic.toArray()));
-            ps.setArray(i++, ps.getConnection().createArrayOf("integer", topic.toArray()));
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             courses = parseResultSet(ps.executeQuery());
+            System.out.println("after ps.execute");
+            System.out.println(courses);
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return courses;
     }
@@ -180,11 +187,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, teacherId);
             courses = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return courses;
     }
@@ -196,11 +203,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return true;
     }
@@ -214,11 +221,11 @@ public class CourseDaoImpl implements CourseDao {
             prepareStatementForCreateCourse(ps, course);
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return false;
     }
@@ -233,11 +240,11 @@ public class CourseDaoImpl implements CourseDao {
             prepareStatementForCreateCourse(ps, course);
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return course;
     }
@@ -251,11 +258,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setString(1, type);
             courses = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return courses;
     }
@@ -267,11 +274,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, duration);
             list = parseResultSetForList(ps.executeQuery(), "duration");
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return list;
     }
@@ -283,11 +290,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, capacity);
             list = parseResultSetForList(ps.executeQuery(), "capacity");
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return list;
     }
@@ -299,11 +306,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, topic);
             list = parseResultSetForList(ps.executeQuery(), "topic_id");
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return list;
     }
@@ -315,11 +322,11 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(1, teacher);
             list = parseResultSetForList(ps.executeQuery(), "teacher_id");
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return list;
     }

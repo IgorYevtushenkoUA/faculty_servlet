@@ -17,10 +17,10 @@ public class Queries {
             "    description       = ?,\n" +
             "    teacher_id        = ?,\n" +
             "    name              = ?"; // update()
-    public static final String SELECT_COURSES_BY_PARAMS = "select c \n" +
+    public static final String SELECT_COURSES_BY_PARAMS = "select * \n" +
             "from course c \n" +
             "where lower(c.name) like lower(concat('%',?,'%')) and \n" +
-            "      c.semester_start in (?) and\n" +
+            "      c.semester_duration in (?) and\n" +
             "      c.capacity in (?) and \n" +
             "      c.topic_id in (?) and\n" +
             "      c.teacher_id in (?)"; // findAllByParams(List<String> courseName, List<Integer> duration,List<Integer> capacity, List<Integer> topic,    List<Integer> teacherId, Pageable pageable)

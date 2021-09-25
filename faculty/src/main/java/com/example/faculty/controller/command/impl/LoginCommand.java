@@ -34,7 +34,6 @@ public class LoginCommand extends CommandFactory {
             System.out.println("user with this password not found");
             return null;
         } else {
-            System.out.println("");
             session.setAttribute("user", user);
             session.setAttribute("role", roleDao.findById(user.getRoleId()).getName());
             return PathConstants.REDIRECT_TO_COURSES;

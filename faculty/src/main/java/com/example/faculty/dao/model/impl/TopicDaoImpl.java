@@ -49,11 +49,11 @@ public class TopicDaoImpl implements TopicDao {
             ps.setString(1, name);
             topic = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return topic;
     }
@@ -65,11 +65,11 @@ public class TopicDaoImpl implements TopicDao {
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_TOPICS)) {
             list = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return list;
     }
@@ -82,11 +82,11 @@ public class TopicDaoImpl implements TopicDao {
             ps.setInt(1, id);
             topic = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return topic;
     }

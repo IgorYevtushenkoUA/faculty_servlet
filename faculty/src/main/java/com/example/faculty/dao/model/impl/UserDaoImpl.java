@@ -69,6 +69,26 @@ public class UserDaoImpl implements UserDao {
         return list;
     }
 
+    public List<Teacher> parseResultSetForTeacher(ResultSet rs) {
+        List<Teacher> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Teacher t = new Teacher();
+                t.setId(rs.getInt("id"));
+                t.setFirstName(rs.getString("first_name"));
+                t.setSecondName(rs.getString("second_name"));
+                t.setLastName(rs.getString("last_name"));
+                t.setEmail(rs.getString("email"));
+                t.setPassword(rs.getString("password"));
+                t.setRoleId(rs.getInt("role_id"));
+                list.add(t);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+
     // todo here code is duplicate with create [think]
     public void prepareStatementForUpdate(PreparedStatement ps, User user) {
         i = 1;
@@ -91,11 +111,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(1, email);
             user = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return user;
     }
@@ -108,11 +128,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(1, id);
             user = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return user;
     }
@@ -129,11 +149,11 @@ public class UserDaoImpl implements UserDao {
                 user.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return user;
     }
@@ -145,11 +165,11 @@ public class UserDaoImpl implements UserDao {
             prepareStatementForCreateStudent(stmt, student);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return student;
     }
@@ -161,18 +181,30 @@ public class UserDaoImpl implements UserDao {
             prepareStatementForCreateTeacher(stmt, teacher);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return teacher;
     }
 
     @Override
     public List<Teacher> findAllTeachersByPIB(String name) {
-        return null;
+        List<Teacher> teachers = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_TEACHER_BY_PIB)) {
+            ps.setString(1, name);
+            teachers =  parseResultSetForTeacher(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println(e);
+        }
+        return teachers;
     }
 
 

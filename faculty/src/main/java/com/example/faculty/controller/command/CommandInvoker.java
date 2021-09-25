@@ -24,6 +24,8 @@ public class CommandInvoker {
     }
 
     public static CommandFactory getCommand(String commandName) {
+        System.out.println("-----------------------------------------------------");
+        System.out.println("COMMAND NAME : [" + commandName + "]");
         if (commandName == null || !commands.containsKey(commandName)) {
             return commands.get("unknownCommand").create();
         } else {

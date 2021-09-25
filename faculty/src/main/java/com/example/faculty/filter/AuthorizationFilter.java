@@ -3,6 +3,7 @@ package com.example.faculty.filter;
 import com.example.faculty.controller.constant.PageConstants;
 import com.example.faculty.dao.model.*;
 import com.example.faculty.dao.model.impl.*;
+import com.example.faculty.model.entity.Teacher;
 import com.example.faculty.model.enums.ROLE;
 
 import javax.servlet.*;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AuthorizationFilter implements Filter {
 
@@ -33,10 +35,6 @@ public class AuthorizationFilter implements Filter {
         StudentHasCourseDao studentHasCourseDao = new StudentHasCourseDaoImpl();
         TopicDao topicDao = new TopicDaoImpl();
         UserDao userDao = new UserDaoImpl();
-
-        System.out.println(topicDao.findAll());
-        System.out.println(topicDao.findByName("RIGHT"));
-        System.out.println(topicDao.findById(2));
 
         System.out.println("----- END -----");
     }

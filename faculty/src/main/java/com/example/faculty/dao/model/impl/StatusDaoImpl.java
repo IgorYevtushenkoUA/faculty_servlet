@@ -47,11 +47,11 @@ public class StatusDaoImpl implements StatusDao {
             ps.setInt(1,id);
             status = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return status;
     }
@@ -64,11 +64,11 @@ public class StatusDaoImpl implements StatusDao {
             ps.setString(1,name);
             status = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println("SQLException e");
+            System.out.println(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException e");
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException e");
+            System.out.println(e);
         }
         return status;
     }

@@ -16,13 +16,11 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("doget");
         process(request, response, ACTION.GET);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("dopost");
         process(request, response, ACTION.POST);
     }
 
