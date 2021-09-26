@@ -43,18 +43,40 @@
                            placeholder="ПІБ викладача">
                 </div>
             </div>
-<%--            <button type="submit" class="btn btn-primary btn-lg btn-block">Filter</button>--%>
-            <input type="submit" value="Filter">
+            <%--            <button type="submit" class="btn btn-primary btn-lg btn-block">Filter</button>--%>
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Filter">
         </form>
-
     </div>
 
-    <div>
-        <ul>
+    <div class="col-lg-10 mt-5 mb-5">
+        <table class="table table-bordered table-responsive-sm">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Capacity</th>
+                <th>Semester</th>
+                <th>Duration</th>
+            </tr>
+            </thead>
+            <tbody>
             <c:forEach var="course" items="${courses}">
-                <li><c:out value="${course.getName()}" /></li>
+                <tr>
+                    <td><c:out value="${course.getId()}"/></td>
+                    <td>
+                        <a href="/controller?command=course&courseId=${course.getId()}">
+                            <c:out value="${course.getName()}"/>
+                        </a>
+                    </td>
+                    <td><c:out value="${course.getDescription()}"/></td>
+                    <td><c:out value="${course.getCapacity()}"/></td>
+                    <td><c:out value="${course.getSemesterStart()}"/></td>
+                    <td><c:out value="${course.getSemesterDuration()}"/></td>
+                </tr>
             </c:forEach>
-        </ul>
+            </tbody>
+        </table>
     </div>
 
 </div>

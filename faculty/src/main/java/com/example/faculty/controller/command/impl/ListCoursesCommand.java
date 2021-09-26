@@ -26,6 +26,7 @@ public class ListCoursesCommand extends CommandFactory {
         String topic = getParam(request.getParameter("topic"));
         String teacher = getParam(request.getParameter("teacher"));
         String filter = (String) session.getAttribute("filter");
+        String courseId = (String) session.getAttribute("courseId");
 
         CourseDao courseDao = new CourseDaoImpl();
         TopicDao topicDao = new TopicDaoImpl();
@@ -35,18 +36,22 @@ public class ListCoursesCommand extends CommandFactory {
         request.setAttribute("teachers", userDao.findAllTeacher());
         request.setAttribute("courses", findCourses(courseDao, course, duration, capacity, topic, teacher, topicDao, userDao));
 
-
-        if (course.isEmpty() && duration.isEmpty() && capacity.isEmpty() && topic.isEmpty() && teacher.isEmpty()) {
-            session.setAttribute("filter", "1");
+        if(courseId == null || courseId.isEmpty())
             return "jsp/courses.jsp";
-        }
-        if (filter == null || filter.equals("0")) {
-            session.setAttribute("filter", "1");
-            return "jsp/courses.jsp";
-        }
 
-        session.setAttribute("filter", "0");
-        return "controller?command=courses";
+        return "jsp/course.jsp";
+
+//        if (course.isEmpty() && duration.isEmpty() && capacity.isEmpty() && topic.isEmpty() && teacher.isEmpty()) {
+//            session.setAttribute("filter", "1");
+//            return "jsp/courses.jsp";
+//        }
+//        if (filter == null || filter.equals("0")) {
+//            session.setAttribute("filter", "1");
+//            return "jsp/courses.jsp";
+//        }
+//
+//        session.setAttribute("filter", "0");
+//        return "controller?command=courses";
     }
 
     private String getParam(String param) {

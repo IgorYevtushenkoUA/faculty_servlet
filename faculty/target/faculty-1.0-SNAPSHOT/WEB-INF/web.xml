@@ -49,6 +49,7 @@
                 login
                 register
                 courses
+                course
             </param-value>
         </init-param>
     </filter>
