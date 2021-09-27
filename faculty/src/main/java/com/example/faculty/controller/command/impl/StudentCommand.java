@@ -23,11 +23,6 @@ public class StudentCommand extends CommandFactory {
         CourseDao courseDao = new CourseDaoImpl();
         List<StudentCourseInfoDto> courses = courseDao.findAllStudentCoursesByType(user.getId(), statusType);
 
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        System.out.println(courses);
-        System.out.println("type = " + statusType);
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-
         request.setAttribute("courses", courses);
         request.setAttribute("type", statusType);
 

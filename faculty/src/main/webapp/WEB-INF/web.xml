@@ -36,6 +36,7 @@
             <param-name>ROLE_TEACHER</param-name>
             <param-value>
                 teacher
+                teacher-course
                 courses
                 course
                 logout

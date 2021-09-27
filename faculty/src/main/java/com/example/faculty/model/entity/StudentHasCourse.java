@@ -5,58 +5,35 @@ import java.util.Objects;
 
 public class StudentHasCourse {
 
-    private Student student;
-    private Course course;
+    private int studentId;
+    private int courseId;
+    private int statusId;
     private Integer mark;
     private Timestamp recordingTime;
 
-    public StudentHasCourse() {
+
+    public int getStudentId() {
+        return studentId;
     }
 
-    public StudentHasCourse(Student student, Course course, Integer mark, Timestamp recordingTime) {
-        this.student = student;
-        this.course = course;
-        this.mark = mark;
-        this.recordingTime = recordingTime;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StudentHasCourse)) return false;
-        StudentHasCourse that = (StudentHasCourse) o;
-        return getStudent().equals(that.getStudent()) && getCourse().equals(that.getCourse()) && getMark().equals(that.getMark()) && getRecordingTime().equals(that.getRecordingTime());
+    public int getCourseId() {
+        return courseId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getStudent(), getCourse(), getMark(), getRecordingTime());
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
-    @Override
-    public String toString() {
-        return "StudentHasCourse{" +
-                "student=" + student +
-                ", course=" + course +
-                ", mark=" + mark +
-                ", recordingTime=" + recordingTime +
-                '}';
+    public int getStatusId() {
+        return statusId;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     public Integer getMark() {
@@ -75,4 +52,14 @@ public class StudentHasCourse {
         this.recordingTime = recordingTime;
     }
 
+    @Override
+    public String toString() {
+        return "StudentHasCourse{" +
+                "studentId=" + studentId +
+                ", courseId=" + courseId +
+                ", statusId=" + statusId +
+                ", mark=" + mark +
+                ", recordingTime=" + recordingTime +
+                '}';
+    }
 }

@@ -19,6 +19,7 @@ public class CommandInvoker {
         commands.put("student", StudentCommand::new);
         // teacher
         commands.put("teacher", TeacherCommand::new);
+        commands.put("teacher-course", TeacherCourseInfoCommand::new);
         // admin
         commands.put("admin", AdminCommand::new);
     }

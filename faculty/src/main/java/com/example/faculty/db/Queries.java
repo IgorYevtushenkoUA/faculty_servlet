@@ -24,7 +24,7 @@ public class Queries {
             "      c.capacity in (?) and \n" +
             "      c.topic_id in (?) and\n" +
             "      c.teacher_id in (?)"; // findAllByParams(List<String> courseName, List<Integer> duration,List<Integer> capacity, List<Integer> topic,    List<Integer> teacherId, Pageable pageable)
-    public static final String SELECT_ALL_TEACHERS_COURSES = "select c\n" +
+    public static final String SELECT_ALL_TEACHERS_COURSES = "select *\n" +
             "from course c\n" +
             "where c.teacher_id = ?";// findAllTeacherCourses
     public static final String DELETE_COURSE_BY_ID = "delete\n" +
@@ -71,6 +71,11 @@ public class Queries {
     // STUDENT_HAS_COURSE
     public static final String ENROLL_STUDENT_TO_COURSE = "insert into student_has_course(student_id, course_id, status_id, mark, recording_time)\n" +
             "values (?, ?, ?, ?, ?)";
+
+    public static final String UPDATE_STUDENT_HAS_COURSE = "update student_has_course\n" +
+            "set mark=?\n" +
+            "where student_id = ?\n" +
+            "  and course_id = ?  ";
     public static final String SELECT_ALL_STUDENTS_BY_COURSE_AND_YEAR_AND_NAME = "";
     public static final String INSERT_STUDENT_HAS_COURSE = "";
     public static final String SELECT_ALL_BY_STUDENT_AND_COURSE = "";

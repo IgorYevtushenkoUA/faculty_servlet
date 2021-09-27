@@ -11,7 +11,7 @@
     <table style="with: 50%">
         <tr>
             <td>Email</td>
-            <td><input type="text" name="email" value="s@gmail.com"/></td>
+            <td><input type="text" name="email" value="t@gmail.com"/></td>
         </tr>
         <tr>
             <td>Password</td>

@@ -5,14 +5,6 @@ import com.example.faculty.model.entity.Student;
 import java.sql.Timestamp;
 
 public class StudentShortInfoDto {
-    @Override
-    public String toString() {
-        return "StudentShortInfoDto{" +
-                "student=" + student +
-                ", mark=" + mark +
-                ", recordingTime=" + recordingTime +
-                '}';
-    }
 
     private Student student;
     private Integer mark;
@@ -40,5 +32,14 @@ public class StudentShortInfoDto {
 
     public void setRecordingTime(Timestamp recordingTime) {
         this.recordingTime = recordingTime;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentShortInfoDto{" +
+                "student=" + student +
+                ", mark=" + mark +
+                ", recordingTime=" + recordingTime +
+                '}';
     }
 }

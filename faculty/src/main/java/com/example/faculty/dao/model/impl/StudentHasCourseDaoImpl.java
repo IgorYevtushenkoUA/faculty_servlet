@@ -1,6 +1,74 @@
 package com.example.faculty.dao.model.impl;
 
 import com.example.faculty.dao.model.StudentHasCourseDao;
+import com.example.faculty.db.ConnectionPool;
+import com.example.faculty.db.Queries;
+import com.example.faculty.model.entity.StudentHasCourse;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
+
+    int i = 1;
+
+    private void prepareStatementForCreate(PreparedStatement ps, StudentHasCourse shc) {
+        i = 1;
+        try {
+            ps.setInt(i++, shc.getStudentId());
+            ps.setInt(i++, shc.getCourseId());
+            ps.setInt(i++, shc.getStatusId());
+            ps.setInt(i++, shc.getMark());
+            ps.setTimestamp(i++, shc.getRecordingTime());
+        } catch (SQLException e) {
+        }
+    }
+
+    private void prepareStatementForUpdate(PreparedStatement ps, StudentHasCourse shc) {
+        i = 1;
+        try {
+            ps.setInt(i++, shc.getMark());
+        } catch (SQLException e) {
+        }
+    }
+
+    private List<StudentHasCourse> parseResultSet(ResultSet rs) {
+        i = 1;
+        List<StudentHasCourse> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                StudentHasCourse shc = new StudentHasCourse();
+                shc.setStudentId(rs.getInt("student_id"));
+                shc.setCourseId(rs.getInt("course_id"));
+                shc.setStatusId(rs.getInt("status_id"));
+                shc.setMark(rs.getInt("mark"));
+                shc.setRecordingTime(rs.getTimestamp("recording_time"));
+                list.add(shc);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    @Override
+    public void update(int mark, int studentId, int courseId) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_STUDENT_HAS_COURSE)) {
+            ps.setInt(1, mark);
+            ps.setInt(2, studentId);
+            ps.setInt(3, courseId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println(e);
+        }
+    }
 }
