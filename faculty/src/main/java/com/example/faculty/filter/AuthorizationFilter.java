@@ -36,6 +36,8 @@ public class AuthorizationFilter implements Filter {
         TopicDao topicDao = new TopicDaoImpl();
         UserDao userDao = new UserDaoImpl();
 
+        System.out.println(userDao.findAllEnrolledStudentToCourse(1));
+
         System.out.println("----- END -----");
     }
 

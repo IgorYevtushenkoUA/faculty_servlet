@@ -1,5 +1,6 @@
 package com.example.faculty.dao.model;
 
+import com.example.faculty.dto.StudentShortInfoDto;
 import com.example.faculty.model.entity.Student;
 import com.example.faculty.model.entity.Teacher;
 import com.example.faculty.model.entity.User;
@@ -30,6 +31,6 @@ public interface UserDao {
 
     List<Student> findAllStudentsByPIB(String name);
 
-    List<Student> findAllEnrolledStudentToCourse(int courseId);
+    List<StudentShortInfoDto> findAllEnrolledStudentToCourse(int courseId);
 
 }

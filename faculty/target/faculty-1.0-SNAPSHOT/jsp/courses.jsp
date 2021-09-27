@@ -61,9 +61,9 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="course" items="${courses}">
+            <c:forEach var="course" items="${courses}" varStatus="iter">
                 <tr>
-                    <td><c:out value="${course.getId()}"/></td>
+                    <td><c:out value="${iter.index+1}"/></td>
                     <td>
                         <a href="/controller?command=course&courseId=${course.getId()}">
                             <c:out value="${course.getName()}"/>

@@ -85,15 +85,48 @@ public class Queries {
     public static final String SELECT_USER_BY_ID = "select * from users u where u.id = ?";
     public static final String INSERT_USER = "insert into users (first_name, second_name, last_name, email, password, role_id) values (?,?,?,?,?,?)";
     public static final String INSERT_TEACHER = "insert into teacher (id) values (?)";
-    public static final String INSERT_STUDENT = "insert into student (id, course_num, enable) values (?,?,?)";
+    public static final String INSERT_STUDENT = "insert into student (id, course_num) values (?,?)";
     public static final String SELECT_TEACHER_BY_PIB = "select * from users u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=2";
     public static final String SELECT_TEACHER_BY_ID = "select * from users u where u.id=?";
     public static final String SELECT_ALL_TEACHERS = "select * from users u where u.role_id=2";
-    public static final String SELECT_ALL_STUDENTS = "select * from users u where u.role_id=3";
+    public static final String SELECT_ALL_STUDENTS = "select u.id, u.first_name, u.second_name, u.last_name, u.email, u.password, u.role_id, s.course_num, s.enable\n" +
+            "from users u\n" +
+            "         inner join student s on u.id = s.id";
     public static final String SELECT_STUDENT_INFO_BY_ID_AND_COURSE_ID = "";// ТУТ ТРОЗИНЕ ЗРОЗУМІЛО ЧОМУ Я ПИСАВ ЗА КУРСОМ, ЯКЩО БЕЗ КУРСУ МОЖНА
-    public static final String SELECT_STUDENT_BY_ID = "select * from users u where u.id=?";
-    public static final String SELECT_STUDENT_BY_PIB = "select * from users u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=3";
-    public static final String SELECT_ENROLLED_STUDENT_TO_COURSE = "select u from users u inner join student_has_course shc on shc.user_id=u.id and shc.course_id=?";
+    public static final String SELECT_STUDENT_BY_ID = "select u.id, u.first_name, u.second_name, u.last_name, u.email, u.password, u.role_id, s.course_num, s.enable\n" +
+            "from users u\n" +
+            "         inner join student s on u.id = s.id and u.id = ?";
+    public static final String SELECT_STUDENT_BY_PIB = "select u.id,\n" +
+            "       u.first_name,\n" +
+            "       u.second_name,\n" +
+            "       u.last_name,\n" +
+            "       u.email,\n" +
+            "       u.password,\n" +
+            "       u.role_id,\n" +
+            "       s.course_num,\n" +
+            "       s.enable\n" +
+            "from users u\n" +
+            "         inner join student s\n" +
+            "                    on u.id = s.id\n" +
+            "where lower(concat(u.last_name\n" +
+            "    , ' '\n" +
+            "    , u.first_name\n" +
+            "    , ' '\n" +
+            "    , u.last_name)) like lower(concat('%'\n" +
+            "    , ? \n" +
+            "    , '%'))\n";
+    public static final String SELECT_ENROLLED_STUDENT_TO_COURSE = "select u.id,\n" +
+            "       u.first_name,\n" +
+            "       u.second_name,\n" +
+            "       u.last_name,\n" +
+            "       s.course_num,\n" +
+            "       shc.mark,\n" +
+            "       shc.recording_time\n" +
+            "from users u\n" +
+            "         inner join student s\n" +
+            "                    on u.id = s.id\n" +
+            "inner join student_has_course shc on s.id = shc.student_id\n" +
+            "where shc.course_id=?";
     public static final String UPDATE_USER="";
 
 }
