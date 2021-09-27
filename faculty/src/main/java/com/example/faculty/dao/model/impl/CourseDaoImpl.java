@@ -3,6 +3,7 @@ package com.example.faculty.dao.model.impl;
 import com.example.faculty.dao.model.CourseDao;
 import com.example.faculty.db.ConnectionPool;
 import com.example.faculty.db.Queries;
+import com.example.faculty.dto.StudentCourseInfoDto;
 import com.example.faculty.model.entity.Course;
 
 import java.sql.*;
@@ -47,6 +48,21 @@ public class CourseDaoImpl implements CourseDao {
         } catch (SQLException e) {
         }
         return courses;
+    }
+
+    private List<StudentCourseInfoDto> parseStudentCourseInfoDtoResultSet(ResultSet rs) {
+        List<StudentCourseInfoDto> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                StudentCourseInfoDto studentCourseInfoDto = new StudentCourseInfoDto();
+                studentCourseInfoDto.setCourseId(rs.getInt("id"));
+                studentCourseInfoDto.setCourseName(rs.getString("name"));
+                studentCourseInfoDto.setMark(rs.getInt("mark"));
+                list.add(studentCourseInfoDto);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
     }
 
     private List<Integer> parseResultSetForList(ResultSet rs, String columnLabel) {
@@ -262,12 +278,13 @@ public class CourseDaoImpl implements CourseDao {
 
 
     @Override
-    public List<Course> findAllStudentCoursesByType(String type) {
-        List<Course> courses = new ArrayList<>();
+    public List<StudentCourseInfoDto> findAllStudentCoursesByType(int studentId, String type) {
+        List<StudentCourseInfoDto> courses = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_STUDENT_COURSES_BY_TYPE)) {
-            ps.setString(1, type);
-            courses = parseResultSet(ps.executeQuery());
+            ps.setInt(1, studentId);
+            ps.setString(2, type);
+            courses = parseStudentCourseInfoDtoResultSet(ps.executeQuery());
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NullPointerException e) {

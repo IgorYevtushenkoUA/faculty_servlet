@@ -5,6 +5,7 @@ import com.example.faculty.dao.model.*;
 import com.example.faculty.dao.model.impl.*;
 import com.example.faculty.model.entity.Teacher;
 import com.example.faculty.model.enums.ROLE;
+import com.example.faculty.model.enums.STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -15,15 +16,15 @@ import java.util.stream.Collectors;
 
 public class AuthorizationFilter implements Filter {
 
-    private static final Map<ROLE, List<String>> accessMap = new HashMap<>();
+    private static final Map<String, List<String>> accessMap = new HashMap<>();
     private static final List<String> forAll = new ArrayList<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         doTest();
-        accessMap.put(ROLE.ROLE_ADMIN, asList(filterConfig.getInitParameter(ROLE.ROLE_ADMIN.name())));
-        accessMap.put(ROLE.ROLE_TEACHER, asList(filterConfig.getInitParameter(ROLE.ROLE_TEACHER.name())));
-        accessMap.put(ROLE.ROLE_STUDENT, asList(filterConfig.getInitParameter(ROLE.ROLE_STUDENT.name())));
+        accessMap.put(ROLE.ROLE_ADMIN.name(), asList(filterConfig.getInitParameter(ROLE.ROLE_ADMIN.name())));
+        accessMap.put(ROLE.ROLE_TEACHER.name(), asList(filterConfig.getInitParameter(ROLE.ROLE_TEACHER.name())));
+        accessMap.put(ROLE.ROLE_STUDENT.name(), asList(filterConfig.getInitParameter(ROLE.ROLE_STUDENT.name())));
         forAll.addAll(asList(filterConfig.getInitParameter(ROLE.ROLE_GUEST.name())));
     }
 
@@ -35,8 +36,6 @@ public class AuthorizationFilter implements Filter {
         StudentHasCourseDao studentHasCourseDao = new StudentHasCourseDaoImpl();
         TopicDao topicDao = new TopicDaoImpl();
         UserDao userDao = new UserDaoImpl();
-
-        System.out.println(userDao.findAllEnrolledStudentToCourse(1));
 
         System.out.println("----- END -----");
     }
@@ -55,7 +54,7 @@ public class AuthorizationFilter implements Filter {
         if (session == null) {
             return false;
         }
-        ROLE role = (ROLE) session.getAttribute("role");
+        String role = (String) session.getAttribute("role");
         return accessMap.get(role).contains(command);
     }
 

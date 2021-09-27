@@ -36,7 +36,7 @@ public class Queries {
     public static final String DELETE_TEACHER_FROM_COURSE = "update course\n" +
             "set teacher_id = null\n" +
             "where id = ?"; // deleteTeacherFromCourse()
-    public static final String SELECT_ALL_STUDENT_COURSES_BY_TYPE = "select c\n" +
+    public static final String SELECT_ALL_STUDENT_COURSES_BY_TYPE = "select c.id, c.name, shc.mark\n" +
             "from course c\n" +
             "         inner join student_has_course shc on shc.course_id = c.id\n" +
             "where shc.student_id = ?\n" +

@@ -27,18 +27,27 @@
                 list-courses
                 block-student
                 unblock-student
+                courses
+                course
+                logout
             </param-value>
         </init-param>
         <init-param>
             <param-name>ROLE_TEACHER</param-name>
             <param-value>
                 teacher
+                courses
+                course
+                logout
             </param-value>
         </init-param>
         <init-param>
             <param-name>ROLE_STUDENT</param-name>
             <param-value>
                 student
+                courses
+                course
+                logout
             </param-value>
         </init-param>
         <init-param>

@@ -1,5 +1,6 @@
 package com.example.faculty.dao.model;
 
+import com.example.faculty.dto.StudentCourseInfoDto;
 import com.example.faculty.model.entity.Course;
 
 import java.util.List;
@@ -25,6 +26,6 @@ public interface CourseDao {
 
     Course deleteTeacherFromCourse(int teacherId, int courseId);
 
-    List<Course> findAllStudentCoursesByType(String type);
+    List<StudentCourseInfoDto> findAllStudentCoursesByType(int studentId, String type);
 
 }
