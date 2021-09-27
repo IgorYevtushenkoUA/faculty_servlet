@@ -1,4 +1,4 @@
-package com.example.faculty.controller.command.impl;
+package com.example.faculty.controller.command.impl.admin;
 
 import com.example.faculty.controller.command.CommandFactory;
 

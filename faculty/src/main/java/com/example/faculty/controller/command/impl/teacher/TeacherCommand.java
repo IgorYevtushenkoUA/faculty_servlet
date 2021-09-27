@@ -1,4 +1,4 @@
-package com.example.faculty.controller.command.impl;
+package com.example.faculty.controller.command.impl.teacher;
 
 import com.example.faculty.controller.command.CommandFactory;
 import com.example.faculty.dao.model.CourseDao;

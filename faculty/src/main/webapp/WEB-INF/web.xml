@@ -20,16 +20,18 @@
             <param-name>ROLE_ADMIN</param-name>
             <param-value>
                 admin
-                add-course
-                add-teacher
-                edit-course
-                list-users
-                list-courses
-                block-student
-                unblock-student
                 courses
                 course
                 logout
+                course-create
+                teacher-create
+                student-create
+                teachers
+                students
+                course-edit
+                teacher-edit
+                student-edit
+
             </param-value>
         </init-param>
         <init-param>

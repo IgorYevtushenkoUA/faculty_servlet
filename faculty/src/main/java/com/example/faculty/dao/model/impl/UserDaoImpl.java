@@ -249,7 +249,6 @@ public class UserDaoImpl implements UserDao {
         return teachers;
     }
 
-
     @Override
     public List<Teacher> findAllTeacher() {
         List<Teacher> teachers = new ArrayList<>();

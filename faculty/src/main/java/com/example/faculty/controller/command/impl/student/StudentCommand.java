@@ -1,10 +1,8 @@
-package com.example.faculty.controller.command.impl;
+package com.example.faculty.controller.command.impl.student;
 
 import com.example.faculty.controller.command.CommandFactory;
 import com.example.faculty.dao.model.CourseDao;
-import com.example.faculty.dao.model.TopicDao;
 import com.example.faculty.dao.model.impl.CourseDaoImpl;
-import com.example.faculty.dao.model.impl.TopicDaoImpl;
 import com.example.faculty.dto.StudentCourseInfoDto;
 import com.example.faculty.model.entity.User;
 import com.example.faculty.model.enums.STATUS;
