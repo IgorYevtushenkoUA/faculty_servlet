@@ -5,7 +5,7 @@ import com.example.faculty.controller.command.CommandFactory;
 public class AdminCommand extends CommandFactory {
     @Override
     public String doGet() {
-        return null;
+        return "jsp/users/admin/mainPage.jsp";
     }
 
     @Override

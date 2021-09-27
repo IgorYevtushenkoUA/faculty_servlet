@@ -22,6 +22,19 @@ public class CommandInvoker {
         commands.put("teacher-course", TeacherCourseInfoCommand::new);
         // admin
         commands.put("admin", AdminCommand::new);
+
+        commands.put("course-create", AdminCommand::new);
+        commands.put("teacher-create", AdminCommand::new);
+        commands.put("student-create", AdminCommand::new);
+
+        commands.put("admin-courses", AdminCommand::new);
+        commands.put("admin-teachers", AdminCommand::new);
+        commands.put("admin-students", AdminCommand::new);
+
+        commands.put("course-edit", AdminCommand::new);
+        commands.put("teacher-edit", AdminCommand::new);
+        commands.put("student-edit", AdminCommand::new);
+        commands.put("", AdminCommand::new);
     }
 
     public static CommandFactory getCommand(String commandName) {
