@@ -90,7 +90,7 @@ public class Queries {
     public static final String SELECT_USER_BY_ID = "select * from users u where u.id = ?";
     public static final String INSERT_USER = "insert into users (first_name, second_name, last_name, email, password, role_id) values (?,?,?,?,?,?)";
     public static final String INSERT_TEACHER = "insert into teacher (id) values (?)";
-    public static final String INSERT_STUDENT = "insert into student (id, course_num) values (?,?)";
+    public static final String INSERT_STUDENT = "insert into student (id, course_num, enable) values (?,?, true)";
     public static final String SELECT_TEACHER_BY_PIB = "select * from users u where lower(concat(u.last_name,' ',u.first_name,' ',u.last_name)) like lower(concat('%',?,'%')) and u.role_id=2";
     public static final String SELECT_TEACHER_BY_ID = "select * from users u where u.id=?";
     public static final String SELECT_ALL_TEACHERS = "select * from users u where u.role_id=2";

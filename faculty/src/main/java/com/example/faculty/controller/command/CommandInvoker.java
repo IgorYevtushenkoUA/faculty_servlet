@@ -3,6 +3,8 @@ package com.example.faculty.controller.command;
 import com.example.faculty.controller.command.impl.*;
 import com.example.faculty.controller.command.impl.admin.AdminCommand;
 import com.example.faculty.controller.command.impl.admin.CreateCourseCommand;
+import com.example.faculty.controller.command.impl.admin.CreateStudentCommand;
+import com.example.faculty.controller.command.impl.admin.CreateTeacherCommand;
 import com.example.faculty.controller.command.impl.student.StudentCommand;
 import com.example.faculty.controller.command.impl.teacher.TeacherCommand;
 import com.example.faculty.controller.command.impl.teacher.TeacherCourseInfoCommand;
@@ -29,8 +31,8 @@ public class CommandInvoker {
         commands.put("admin", AdminCommand::new);
 
         commands.put("course-create", CreateCourseCommand::new);
-        commands.put("teacher-create", AdminCommand::new);
-        commands.put("student-create", AdminCommand::new);
+        commands.put("teacher-create", CreateTeacherCommand::new);
+        commands.put("student-create", CreateStudentCommand::new);
 
         commands.put("students", AdminCommand::new);
         commands.put("teachers", AdminCommand::new);
