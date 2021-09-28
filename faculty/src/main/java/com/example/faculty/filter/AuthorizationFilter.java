@@ -38,13 +38,9 @@ public class AuthorizationFilter implements Filter {
         TopicDao topicDao = new TopicDaoImpl();
         UserDao userDao = new UserDaoImpl();
 
-        Course course = courseDao.findById(1);
-        course.setTeacherId(null);
-        System.out.println("before");
-        course = courseDao.updateCourse(course);
-        System.out.println("after");
+        System.out.println(studentHasCourseDao.isStudentEnrolled(9,3));
 
-        System.out.println(course);
+
         System.out.println("----- END -----");
     }
 

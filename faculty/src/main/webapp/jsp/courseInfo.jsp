@@ -47,12 +47,12 @@
                 <th>TEACHER TODO</th>
             </tr>
 
-<%--                        <tr>--%>
-<%--                            <td th:text="#{course.teacher}"></td>--%>
-<%--                            <td th:if="${courseInfoDto.getCourse().getTeacher()} != null"--%>
-<%--                                th:text="${courseInfoDto.getCourse().getTeacher().getLastName()} + ' ' + ${courseInfoDto.getCourse().getTeacher().getFirstName()} + ' ' + ${courseInfoDto.getCourse().getTeacher().getSecondName()}"/>--%>
-<%--                            <td th:if="${courseInfoDto.getCourse().getTeacher()}== null" th:text="#{courses.without_teacher}"/>--%>
-<%--                        </tr>--%>
+            <%--                        <tr>--%>
+            <%--                            <td th:text="#{course.teacher}"></td>--%>
+            <%--                            <td th:if="${courseInfoDto.getCourse().getTeacher()} != null"--%>
+            <%--                                th:text="${courseInfoDto.getCourse().getTeacher().getLastName()} + ' ' + ${courseInfoDto.getCourse().getTeacher().getFirstName()} + ' ' + ${courseInfoDto.getCourse().getTeacher().getSecondName()}"/>--%>
+            <%--                            <td th:if="${courseInfoDto.getCourse().getTeacher()}== null" th:text="#{courses.without_teacher}"/>--%>
+            <%--                        </tr>--%>
 
             </tbody>
         </table>
@@ -69,17 +69,53 @@
         </thead>
         <tbody>
         <c:forEach var="student" items="${studentDto}" varStatus="iter">
-            <tr>
-                <td><c:out value="${iter.index+1}"/></td>
-                <td>
-                    <c:out value="${student.getStudent().getLastName()} ${student.getStudent().getFirstName()} ${student.getStudent().getSecondName()}"/>
-                </td>
-                <td><c:out value="${student.getStudent().getCourseNum()}"/></td>
-                <td><c:out value="${student.getRecordingTime()}"/></td>
-<%--            </tr>--%>
-        </c:forEach>
+        <tr>
+            <td><c:out value="${iter.index+1}"/></td>
+            <td>
+                <c:out value="${student.getStudent().getLastName()} ${student.getStudent().getFirstName()} ${student.getStudent().getSecondName()}"/>
+            </td>
+            <td><c:out value="${student.getStudent().getCourseNum()}"/></td>
+            <td><c:out value="${student.getRecordingTime()}"/></td>
+                <%--            </tr>--%>
+            </c:forEach>
         </tbody>
     </table>
+
+
+    <c:if test="${role eq 'ROLE_GUEST'}">
+        <div>
+            <a class="btn btn-primary btn-lg btn-block" href="controller?command=login" role="button">Залогінься, щоб
+                зареєструватися</a>
+        </div>
+    </c:if>
+
+    <c:if test="${role eq 'ROLE_ADMIN'}">
+        <div>
+            <a class="btn btn-primary btn-lg btn-block"
+               href="controller?command=course-edit&id=${course.getId()}">EDIT</a>
+        </div>
+    </c:if>
+
+    <c:if test="${role eq 'ROLE_STUDENT' && canEnroll}">
+        <div>
+            <form action="controller" method="post">
+                <input type="hidden" name="command" value="course">
+                <input type="hidden" name="courseId" value="${course.getId()}">
+                <input type="hidden" name="studentId" value="${studentId}">
+                <c:if test="${!doEnroll}">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="action" value="enroll">
+                        Записатися
+                    </button>
+                </c:if>
+                <c:if test="${doEnroll}">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="action" value="drop_out">
+                        Виписатися
+                    </button>
+                </c:if>
+            </form>
+        </div>
+    </c:if>
+
 </div>
 </body>
 </html>

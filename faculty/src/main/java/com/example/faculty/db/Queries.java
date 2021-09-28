@@ -71,15 +71,15 @@ public class Queries {
 
     // STUDENT_HAS_COURSE
     public static final String ENROLL_STUDENT_TO_COURSE = "insert into student_has_course(student_id, course_id, status_id, mark, recording_time)\n" +
-            "values (?, ?, ?, ?, ?)";
+            "values (?, ?, ?, null, ?)";
 
     public static final String UPDATE_STUDENT_HAS_COURSE = "update student_has_course\n" +
             "set mark=?\n" +
             "where student_id = ?\n" +
             "  and course_id = ?  ";
-    public static final String SELECT_ALL_STUDENTS_BY_COURSE_AND_YEAR_AND_NAME = "";
+    public static final String IS_STUDENT_ENROLLED_TO_COURSE = "select * from student_has_course shc where shc.student_id=? and shc.course_id=?";
     public static final String INSERT_STUDENT_HAS_COURSE = "";
-    public static final String SELECT_ALL_BY_STUDENT_AND_COURSE = "";
+    public static final String DROP_OUT_STUDENT_FROM_COURSE = "delete from student_has_course shc where shc.student_id=? and shc.course_id=?";
     // TOPIC
     public static final String SELECT_TOPIC_BY_ID = "select * from topic t where t.id=?";
     public static final String SELECT_TOPIC_BY_NAME = "select * from topic t where t.name=?";

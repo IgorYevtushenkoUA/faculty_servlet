@@ -189,9 +189,7 @@ public class CourseDaoImpl implements CourseDao {
                                            List<Integer> teacher,
                                            String sortType) {
         List<Course> courses = new ArrayList<>();
-        System.out.println(" in findCoursesByParams");
         String sql = buildSQL(courseName, duration, capacity, topic, teacher, sortType);
-        System.out.println(sql);
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             courses = parseResultSet(ps.executeQuery());
