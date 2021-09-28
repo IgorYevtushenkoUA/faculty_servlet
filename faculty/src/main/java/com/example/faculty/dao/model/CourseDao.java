@@ -22,10 +22,9 @@ public interface CourseDao {
 
     boolean deleteCourseById(int id);
 
-    boolean addTeacherToCourse(int courseId, int teacherId);
-
-    Course deleteTeacherFromCourse(int teacherId, int courseId);
+    Course deleteTeacherFromCourse(int courseId);
 
     List<StudentCourseInfoDto> findAllStudentCoursesByType(int studentId, String type);
 
+    List<Course> findFreeCourses();
 }

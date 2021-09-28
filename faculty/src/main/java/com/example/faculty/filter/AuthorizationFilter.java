@@ -3,6 +3,7 @@ package com.example.faculty.filter;
 import com.example.faculty.controller.constant.PageConstants;
 import com.example.faculty.dao.model.*;
 import com.example.faculty.dao.model.impl.*;
+import com.example.faculty.model.entity.Course;
 import com.example.faculty.model.entity.Teacher;
 import com.example.faculty.model.enums.ROLE;
 import com.example.faculty.model.enums.STATUS;
@@ -37,8 +38,13 @@ public class AuthorizationFilter implements Filter {
         TopicDao topicDao = new TopicDaoImpl();
         UserDao userDao = new UserDaoImpl();
 
-        System.out.println(userDao.findAllTeacher());
+        Course course = courseDao.findById(1);
+        course.setTeacherId(null);
+        System.out.println("before");
+        course = courseDao.updateCourse(course);
+        System.out.println("after");
 
+        System.out.println(course);
         System.out.println("----- END -----");
     }
 

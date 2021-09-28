@@ -3,7 +3,7 @@ package com.example.faculty.db;
 public class Queries {
 
     // COURSE
-    public static final String T = "";
+    public static final String SELECT_FREE_COURSES = "select * from course c where c.teacher_id is null";
     public static final String SELECT_ALL_COURSES = "select * from course"; // findAll()
     public static final String SELECT_COURSE_BY_ID = "select * from course c where c.id = ?"; // findById
     public static final String SELECT_COURSE_BY_NAME = "select * from course c where lower(c.name) like lower(concat('%',?,'%'))"; // findById

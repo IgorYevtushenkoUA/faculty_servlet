@@ -32,6 +32,7 @@ public class CourseDaoImpl implements CourseDao {
 
     private void prepareStatementForUpdateCourse(PreparedStatement ps, Course course) {
         i = 1;
+        System.out.println("here before");
         try {
             ps.setInt(i++, course.getTopicId());
             ps.setInt(i++, course.getCapacity());
@@ -41,7 +42,9 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(i++, course.getTeacherId());
             ps.setString(i++, course.getName());
             ps.setInt(i++, course.getId());
+            System.out.println("here after");
         } catch (SQLException e) {
+
         }
     }
 
@@ -167,7 +170,7 @@ public class CourseDaoImpl implements CourseDao {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_COURSE)) {
             prepareStatementForUpdateCourse(ps, course);
-            parseResultSet(ps.executeQuery());
+            ps.executeQuery();
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NullPointerException e) {
@@ -255,31 +258,12 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean addTeacherToCourse(int courseId, int teacherId) {
-        try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(Queries.INSERT_TEACHER_TO_COURSE)) {
-            Course course = findById(courseId);
-            course.setTeacherId(teacherId);
-            prepareStatementForCreateCourse(ps, course);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
-        } catch (NoSuchElementException e) {
-            System.out.println(e);
-        }
-        return false;
-    }
-
-    @Override
-    public Course deleteTeacherFromCourse(int teacherId, int courseId) {
+    public Course deleteTeacherFromCourse( int courseId) {
         Course course = new Course();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.DELETE_TEACHER_FROM_COURSE)) {
-            course = findById(courseId);
-            course.setTeacherId(null);
-            prepareStatementForCreateCourse(ps, course);
+
+            ps.setInt(1, courseId);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -310,12 +294,12 @@ public class CourseDaoImpl implements CourseDao {
         return courses;
     }
 
-    public List<Integer> setDurationList(Integer duration) {
-        List<Integer> list = new ArrayList<>();
+    @Override
+    public List<Course> findFreeCourses() {
+        List<Course> courses = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
-            ps.setInt(1, duration);
-            list = parseResultSetForList(ps.executeQuery(), "duration");
+             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_FREE_COURSES)) {
+            courses = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NullPointerException e) {
@@ -323,55 +307,7 @@ public class CourseDaoImpl implements CourseDao {
         } catch (NoSuchElementException e) {
             System.out.println(e);
         }
-        return list;
-    }
-
-    public List<Integer> setCapacityList(Integer capacity) {
-        List<Integer> list = new ArrayList<>();
-        try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
-            ps.setInt(1, capacity);
-            list = parseResultSetForList(ps.executeQuery(), "capacity");
-        } catch (SQLException e) {
-            System.out.println(e);
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
-        } catch (NoSuchElementException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
-    public List<Integer> setTopicList(Integer topic) {
-        List<Integer> list = new ArrayList<>();
-        try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
-            ps.setInt(1, topic);
-            list = parseResultSetForList(ps.executeQuery(), "topic_id");
-        } catch (SQLException e) {
-            System.out.println(e);
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
-        } catch (NoSuchElementException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-
-    public List<Integer> setTeacherList(Integer teacher) {
-        List<Integer> list = new ArrayList<>();
-        try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(Queries.SELECT_USER_BY_ID)) {
-            ps.setInt(1, teacher);
-            list = parseResultSetForList(ps.executeQuery(), "teacher_id");
-        } catch (SQLException e) {
-            System.out.println(e);
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
-        } catch (NoSuchElementException e) {
-            System.out.println(e);
-        }
-        return list;
+        return courses;
     }
 
 }
