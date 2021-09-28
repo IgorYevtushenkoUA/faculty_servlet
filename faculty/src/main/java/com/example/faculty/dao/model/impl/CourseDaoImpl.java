@@ -30,6 +30,21 @@ public class CourseDaoImpl implements CourseDao {
         }
     }
 
+    private void prepareStatementForUpdateCourse(PreparedStatement ps, Course course) {
+        i = 1;
+        try {
+            ps.setInt(i++, course.getTopicId());
+            ps.setInt(i++, course.getCapacity());
+            ps.setInt(i++, course.getSemesterStart());
+            ps.setInt(i++, course.getSemesterDuration());
+            ps.setString(i++, course.getDescription());
+            ps.setInt(i++, course.getTeacherId());
+            ps.setString(i++, course.getName());
+            ps.setInt(i++, course.getId());
+        } catch (SQLException e) {
+        }
+    }
+
     private List<Course> parseResultSet(ResultSet rs) {
         List<Course> courses = new ArrayList<>();
         try {
@@ -151,7 +166,7 @@ public class CourseDaoImpl implements CourseDao {
     public Course updateCourse(Course course) {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_COURSE)) {
-            prepareStatementForCreateCourse(ps, course);
+            prepareStatementForUpdateCourse(ps, course);
             parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
             System.out.println(e);

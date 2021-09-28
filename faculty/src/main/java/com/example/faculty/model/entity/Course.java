@@ -26,7 +26,7 @@ public class Course{
         this.name = name;
     }
 
-    public Course(Integer id, Topic topic, int capacity, int semesterStart, int semesterDuration, String description, int teacherId, String name) {
+    public Course(Integer id, int topicId, int capacity, int semesterStart, int semesterDuration, String description, int teacherId, String name) {
         this.id = id;
         this.topicId = topicId;
         this.capacity = capacity;

@@ -38,7 +38,15 @@ public class UserDaoImpl implements UserDao {
             ps.setInt(i++, student.getCourseNum());
             ps.setBoolean(i++, true);
         } catch (SQLException e) {
+        }
+    }
 
+    private void prepareStatementForUpdateStudent(PreparedStatement ps, Student student) {
+        i = 1;
+        try {
+            ps.setBoolean(i++, student.isEnable());
+            ps.setInt(i++, student.getId());
+        } catch (SQLException e) {
         }
     }
 
@@ -70,10 +78,10 @@ public class UserDaoImpl implements UserDao {
         return list;
     }
 
-    public List<Student> parseStudentResultSet(ResultSet rs){
+    public List<Student> parseStudentResultSet(ResultSet rs) {
         List<Student> list = new ArrayList<>();
-        try{
-            while(rs.next()){
+        try {
+            while (rs.next()) {
                 Student student = new Student();
                 student.setId(rs.getInt("id"));
                 student.setFirstName(rs.getString("first_name"));
@@ -86,14 +94,15 @@ public class UserDaoImpl implements UserDao {
                 student.setEnable(rs.getBoolean("enable"));
                 list.add(student);
             }
-        }catch(SQLException e){}
+        } catch (SQLException e) {
+        }
         return list;
     }
 
-    public List<StudentShortInfoDto> parseStudentDtoResultSet(ResultSet rs){
+    public List<StudentShortInfoDto> parseStudentDtoResultSet(ResultSet rs) {
         List<StudentShortInfoDto> list = new ArrayList<>();
-        try{
-            while(rs.next()){
+        try {
+            while (rs.next()) {
                 Student student = new Student();
                 student.setId(rs.getInt("id"));
                 student.setFirstName(rs.getString("first_name"));
@@ -107,7 +116,8 @@ public class UserDaoImpl implements UserDao {
                 studentDto.setRecordingTime(rs.getTimestamp("recording_time"));
                 list.add(studentDto);
             }
-        }catch(SQLException e){}
+        } catch (SQLException e) {
+        }
         return list;
     }
 
@@ -185,7 +195,7 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(Queries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             prepareStatementForCreateUser(stmt, user);
-            stmt.executeUpdate();
+            stmt.executeUpdate(); // check
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
                 user.setId(rs.getInt("id"));
@@ -238,7 +248,7 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_TEACHER_BY_PIB)) {
             ps.setString(1, name);
-            teachers =  parseTeacherResultSetFor(ps.executeQuery());
+            teachers = parseTeacherResultSetFor(ps.executeQuery());
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NullPointerException e) {
@@ -254,7 +264,7 @@ public class UserDaoImpl implements UserDao {
         List<Teacher> teachers = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_TEACHERS)) {
-            teachers =  parseTeacherResultSetFor(ps.executeQuery());
+            teachers = parseTeacherResultSetFor(ps.executeQuery());
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NullPointerException e) {
@@ -270,7 +280,7 @@ public class UserDaoImpl implements UserDao {
         List<Student> students = new ArrayList<>();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_STUDENTS)) {
-            students =  parseStudentResultSet(ps.executeQuery());
+            students = parseStudentResultSet(ps.executeQuery());
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NullPointerException e) {
@@ -283,7 +293,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Student findStudentInfoBydAndCourse(int id, int courseId) {
-return null;
+        return null;
     }
 
     @Override
@@ -335,5 +345,25 @@ return null;
             System.out.println(e);
         }
         return students;
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_STUDENT)) {
+            prepareStatementForUpdateStudent(ps, student);
+            parseResultSet(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException e");
+        } catch (NoSuchElementException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void updateTeacher(Teacher teacher) {
+
     }
 }

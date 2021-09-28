@@ -16,7 +16,8 @@ public class Queries {
             "    semester_duration = ?,\n" +
             "    description       = ?,\n" +
             "    teacher_id        = ?,\n" +
-            "    name              = ?"; // update()
+            "    name              = ? \n" +
+            "where id = ?"; // update()
     public static final String SELECT_COURSES_BY_PARAMS = "select * \n" +
             "from course c \n" +
             "where lower(c.name) like lower(concat('%',?,'%')) and \n" +
@@ -85,6 +86,7 @@ public class Queries {
     public static final String SELECT_ALL_TOPICS = "select * from topic";
     // USER
     public static final String SELECT_ALL_USERS = "select * from users";
+    public static final String UPDATE_STUDENT = "update student set enable = ? where id = ?";
     public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "select * from users u where u.email=? and u.password=?";
     public static final String SELECT_USER_BY_EMAIL = "select * from users u where u.email=?";
     public static final String SELECT_USER_BY_ID = "select * from users u where u.id = ?";

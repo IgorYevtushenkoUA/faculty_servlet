@@ -34,9 +34,9 @@ public class CommandInvoker {
         commands.put("students", ListStudentCommand::new);
         commands.put("teachers", ListTeacherCommand::new);
 
-        commands.put("course-edit", AdminCommand::new);
-        commands.put("teacher-edit", AdminCommand::new);
-        commands.put("student-edit", AdminCommand::new);
+        commands.put("course-edit", EditCourseCommand::new);
+        commands.put("teacher-edit", EditTeacherCommand::new);
+        commands.put("student-edit", EditStudentCommand::new);
         commands.put("", AdminCommand::new);
     }
 
