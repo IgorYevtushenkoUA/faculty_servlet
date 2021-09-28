@@ -17,6 +17,19 @@
                     <span class="input-group-text">Course</span>
                     <input class="form-control" aria-label="With textarea" type="text" name="course"
                            placeholder="Назва дисципліни">
+
+                    <div>
+                        <input id="asc" type="radio" name="sortType" value="ASC"
+                               <c:if test="${sortType eq 'ASC'}">checked</c:if> hidden/>
+                        <label for="asc" id="ascl" class="${classes.get(0)}" onclick="setASC()">A-Z</label>
+                    </div>
+
+                    <div>
+                        <input id="desc" type="radio" name="sortType" value="DESC"
+                               <c:if test="${sortType eq 'DESC'}">checked</c:if> hidden/>
+                        <label for="desc" id="descl" class="${classes.get(1)}" onclick="setDESC()">Z-A</label>
+                    </div>
+
                 </div>
 
                 <div class="input-group p-1">
@@ -80,6 +93,23 @@
 
 </div>
 
+<script>
+
+    function setASC() {
+        document.getElementById("ascl").classList.remove("btn-outline-primary");
+        document.getElementById("ascl").classList.add("btn-primary");
+        document.getElementById("descl").classList.remove("btn-danger");
+        document.getElementById("descl").classList.add("btn-outline-danger");
+    }
+
+    function setDESC() {
+        document.getElementById("ascl").classList.remove("btn-primary");
+        document.getElementById("ascl").classList.add("btn-outline-primary");
+        document.getElementById("descl").classList.remove("btn-outline-danger");
+        document.getElementById("descl").classList.add("btn-danger");
+    }
+
+</script>
 
 <script src="@{/webjars/jquery/jquery.min.js}"></script>
 <script src="@{/webjars/popper.js/umd/popper.min.js}"></script>

@@ -16,7 +16,7 @@ public interface CourseDao {
 
     Course updateCourse(Course course);
 
-    List<Course> findCourseByParams(String courseName, List<Integer> duration, List<Integer> capacity, List<Integer> topic, List<Integer> teacherId);
+    List<Course> findCourseByParams(String courseName, List<Integer> duration, List<Integer> capacity, List<Integer> topic, List<Integer> teacherId, String sortType);
 
     List<Course> findAllTeachersCourses(int teacherId);
 

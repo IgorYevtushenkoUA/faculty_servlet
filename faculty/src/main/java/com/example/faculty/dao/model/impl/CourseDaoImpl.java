@@ -186,11 +186,11 @@ public class CourseDaoImpl implements CourseDao {
                                            List<Integer> duration,
                                            List<Integer> capacity,
                                            List<Integer> topic,
-                                           List<Integer> teacher) {
-        i = 1;
+                                           List<Integer> teacher,
+                                           String sortType) {
         List<Course> courses = new ArrayList<>();
         System.out.println(" in findCoursesByParams");
-        String sql = buildSQL(courseName, duration, capacity, topic, teacher);
+        String sql = buildSQL(courseName, duration, capacity, topic, teacher, sortType);
         System.out.println(sql);
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -211,7 +211,8 @@ public class CourseDaoImpl implements CourseDao {
                             List<Integer> duration,
                             List<Integer> capacity,
                             List<Integer> topic,
-                            List<Integer> teacher) {
+                            List<Integer> teacher,
+                            String sortType) {
         StringBuilder sql = new StringBuilder();
         sql.append("select *\n");
         sql.append("from course c\n");
@@ -219,7 +220,8 @@ public class CourseDaoImpl implements CourseDao {
         sql.append(duration.isEmpty() ? ("  and c.semester_duration in (0)\n") : ("  and c.semester_duration in (" + String.join(", ", duration.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
         sql.append(capacity.isEmpty() ? ("  and c.capacity in (0)\n") : ("  and c.capacity in (" + String.join(", ", capacity.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
         sql.append(topic.isEmpty() ? ("  and c.topic_id in (0)\n") : ("  and c.topic_id in (" + String.join(", ", topic.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
-        sql.append(teacher.isEmpty() ? ("  and c.teacher_id in (0)") : ("  and c.teacher_id in (" + String.join(", ", teacher.stream().map(Object::toString).collect(Collectors.toList())) + ")"));
+        sql.append(teacher.isEmpty() ? ("  and c.teacher_id in (0)") : ("  and c.teacher_id in (" + String.join(", ", teacher.stream().map(Object::toString).collect(Collectors.toList())) + ")\n"));
+        sql.append("order by c.name " + sortType);
         System.out.println(sql);
         return sql.toString();
     }
@@ -258,7 +260,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public Course deleteTeacherFromCourse( int courseId) {
+    public Course deleteTeacherFromCourse(int courseId) {
         Course course = new Course();
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.DELETE_TEACHER_FROM_COURSE)) {

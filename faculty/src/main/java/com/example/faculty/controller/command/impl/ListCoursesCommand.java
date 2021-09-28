@@ -9,14 +9,18 @@ import com.example.faculty.dao.model.impl.TopicDaoImpl;
 import com.example.faculty.dao.model.impl.UserDaoImpl;
 import com.example.faculty.model.entity.Course;
 import com.example.faculty.model.entity.Teacher;
-import com.example.faculty.model.entity.Topic;
-import com.example.faculty.model.entity.User;
 
 import javax.servlet.http.HttpSession;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListCoursesCommand extends CommandFactory {
+
+    CourseDao courseDao = new CourseDaoImpl();
+    TopicDao topicDao = new TopicDaoImpl();
+    UserDao userDao = new UserDaoImpl();
+
     @Override
     public String doGet() {
         HttpSession session = request.getSession();
@@ -25,33 +29,22 @@ public class ListCoursesCommand extends CommandFactory {
         String capacity = getParam(request.getParameter("capacity"));
         String topic = getParam(request.getParameter("topic"));
         String teacher = getParam(request.getParameter("teacher"));
-        String filter = (String) session.getAttribute("filter");
         String courseId = (String) session.getAttribute("courseId");
+        String sortType = getParam(request.getParameter("sortType"));
+        sortType = sortType.equals("") ? "ASC" : sortType;
 
-        CourseDao courseDao = new CourseDaoImpl();
-        TopicDao topicDao = new TopicDaoImpl();
-        UserDao userDao = new UserDaoImpl();
 
         request.setAttribute("topics", topicDao.findAll());
         request.setAttribute("teachers", userDao.findAllTeacher());
-        request.setAttribute("courses", findCourses(courseDao, course, duration, capacity, topic, teacher, topicDao, userDao));
+        request.setAttribute("courses", findCourses(courseDao, course, duration, capacity, topic, teacher, sortType, topicDao, userDao));
+        request.setAttribute("sortType", sortType);
+        request.setAttribute("classes", setBtnClass(sortType));
 
-        if(courseId == null || courseId.isEmpty())
+
+        if (courseId == null || courseId.isEmpty())
             return "jsp/courses.jsp";
 
         return "jsp/course.jsp";
-
-//        if (course.isEmpty() && duration.isEmpty() && capacity.isEmpty() && topic.isEmpty() && teacher.isEmpty()) {
-//            session.setAttribute("filter", "1");
-//            return "jsp/courses.jsp";
-//        }
-//        if (filter == null || filter.equals("0")) {
-//            session.setAttribute("filter", "1");
-//            return "jsp/courses.jsp";
-//        }
-//
-//        session.setAttribute("filter", "0");
-//        return "controller?command=courses";
     }
 
     private String getParam(String param) {
@@ -62,25 +55,26 @@ public class ListCoursesCommand extends CommandFactory {
 
     @Override
     public String doPost() {
-        System.out.println("do post man");
         return "controller?command=courses";
     }
 
 
-    private List<Course> findCourses(CourseDao dao, String course, String duration, String capacity, String topic, String teacher, TopicDao topicDao, UserDao userDao) {
+    private List<Course> findCourses(CourseDao dao, String course, String duration, String capacity, String topic, String teacher, String sortType, TopicDao topicDao, UserDao userDao) {
 
-        List<Course> courses = dao.findAll();
+        List<Course> courses = dao.findAll().stream().sorted(Comparator.comparing(Course::getName, (c1, c2) -> {
+            if (sortType.equals("ASC")) return c2.compareTo(c1);
+            return c1.compareTo(c2);
+        })).collect(Collectors.toList());
 
         if (course.isEmpty() && duration.isEmpty() && capacity.isEmpty() && topic.isEmpty() && teacher.isEmpty())
             return courses;
-
 
         List<Integer> durationList = getDurationList(duration, courses);
         List<Integer> capacityList = getCapacityList(capacity, courses);
         List<Integer> topicList = getTopicList(topic, courses, topicDao);
         List<Integer> teacherList = getTeacherList(teacher, courses, userDao);
 
-        return dao.findCourseByParams(course, durationList, capacityList, topicList, teacherList);
+        return dao.findCourseByParams(course, durationList, capacityList, topicList, teacherList, sortType);
     }
 
 
@@ -113,5 +107,9 @@ public class ListCoursesCommand extends CommandFactory {
                 .distinct().collect(Collectors.toList());
     }
 
+    private List<String> setBtnClass(String sortType) {
+        if (sortType.equals("ASC")) return List.of("btn btn-primary", "btn btn-outline-danger");
+        return List.of("btn btn-outline-primary", "btn btn-danger");
+    }
 
 }
