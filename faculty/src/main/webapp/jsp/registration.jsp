@@ -4,42 +4,49 @@
 <html>
 <head>
     <title>JSP - Hello World</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<%@include file="/jsp/components/navbar.jsp"%>
+<%@include file="/jsp/components/navbar.jsp" %>
 
-<h1>Register Form</h1>
-<form action="controller" method="post">
-    <input type="hidden" name="command" value="register">
-    <table style="with: 50%">
-        <tr>
-            <td>First Name</td>
-            <td><input type="text" name="firstName" value="firstName"/></td>
-        </tr>
-        <tr>
-            <td>Last Name</td>
-            <td><input type="text" name="lastName" value="lastName"/></td>
-        </tr>
-        <tr>
-            <td>Second Name</td>
-            <td><input type="text" name="secondName" value="secondName"/></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td><input type="text" name="email" value="email@gmail.com"/></td>
-        </tr>
-        <tr>
-            <td>Course</td>
-            <td><input type="number" name="course" value="4"/></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password" value="p"/></td>
-        </tr>
+<div class="container mt-5">
+    <form action="controller" method="post">
+        <input type="hidden" name="command" value="register">
 
-    </table>
-    <input type="submit" value="Submit"/>
-</form>
+        <div class="input-group p-1">
+            <span class="input-group-text">First Name</span>
+            <input type="text" class="form-control" name="firstName" placeholder="Enter First Name">
+        </div>
+
+        <div class="input-group p-1">
+            <span class="input-group-text">Second Name</span>
+            <input type="text" class="form-control" name="secondName" placeholder="Enter Second Name">
+        </div>
+
+        <div class="input-group p-1">
+            <span class="input-group-text">Last Name</span>
+            <input type="text" class="form-control" name="lastName" placeholder="Enter Last Name">
+        </div>
+
+        <div class="input-group p-1">
+            <span class="input-group-text">Email</span>
+            <input type="email" class="form-control" name="email" placeholder="Enter Email">
+        </div>
+
+        <div class="input-group p-1">
+            <span class="input-group-text">Password</span>
+            <input type="password" class="form-control" name="password" placeholder="Enter Password">
+        </div>
+
+        <div class="input-group p-1">
+            <span class="input-group-text">Course</span>
+            <input type="number" name="course" class="form-control" min="1" max="4">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+    </form>
+</div>
+
 </body>
 </html>
