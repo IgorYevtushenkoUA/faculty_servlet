@@ -10,6 +10,8 @@ import com.example.faculty.model.enums.STATUS;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class StudentCommand extends CommandFactory {
     @Override
     public String doGet() {
@@ -23,6 +25,7 @@ public class StudentCommand extends CommandFactory {
 
         request.setAttribute("courses", courses);
         request.setAttribute("type", statusType);
+        request.setAttribute("role", getRole(request));
 
         return "jsp/users/student/mainPage.jsp";
     }

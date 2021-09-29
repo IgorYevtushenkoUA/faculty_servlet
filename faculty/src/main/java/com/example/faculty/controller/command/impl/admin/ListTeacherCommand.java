@@ -7,10 +7,13 @@ import com.example.faculty.model.entity.Teacher;
 
 import java.util.List;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class ListTeacherCommand extends CommandFactory {
     @Override
     public String doGet() {
         request.setAttribute("teachers", getTeachers(request.getParameter("name")));
+        request.setAttribute("role", getRole(request));
         return "jsp/users/admin/listTeacher.jsp";
     }
 

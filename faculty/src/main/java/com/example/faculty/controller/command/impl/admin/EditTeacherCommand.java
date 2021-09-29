@@ -11,6 +11,8 @@ import com.example.faculty.model.entity.User;
 
 import java.util.List;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class EditTeacherCommand extends CommandFactory {
 
     UserDao userDao = new UserDaoImpl();
@@ -36,6 +38,7 @@ public class EditTeacherCommand extends CommandFactory {
         int teacherId = Integer.parseInt(request.getParameter("id"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         String action = request.getParameter("action");
+        request.setAttribute("role", getRole(request));
 
         if (action.equals("delete")) {
             deleteSubject(courseId);

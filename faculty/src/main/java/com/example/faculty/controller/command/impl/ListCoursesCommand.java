@@ -15,6 +15,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class ListCoursesCommand extends CommandFactory {
 
     CourseDao courseDao = new CourseDaoImpl();
@@ -39,7 +41,7 @@ public class ListCoursesCommand extends CommandFactory {
         request.setAttribute("courses", findCourses(courseDao, course, duration, capacity, topic, teacher, sortType, topicDao, userDao));
         request.setAttribute("sortType", sortType);
         request.setAttribute("classes", setBtnClass(sortType));
-
+        request.setAttribute("role", getRole(request));
 
         if (courseId == null || courseId.isEmpty())
             return "jsp/courses.jsp";

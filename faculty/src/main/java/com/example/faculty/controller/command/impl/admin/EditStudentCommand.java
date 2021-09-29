@@ -5,6 +5,8 @@ import com.example.faculty.dao.model.UserDao;
 import com.example.faculty.dao.model.impl.UserDaoImpl;
 import com.example.faculty.model.entity.Student;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class EditStudentCommand extends CommandFactory {
 
     UserDao userDao = new UserDaoImpl();
@@ -14,6 +16,7 @@ public class EditStudentCommand extends CommandFactory {
 
         request.setAttribute("student",
                 userDao.findStudentById(Integer.parseInt(request.getParameter("id"))));
+        request.setAttribute("role", getRole(request));
 
         return "jsp/users/admin/editStudent.jsp";
     }

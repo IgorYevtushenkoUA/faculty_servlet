@@ -7,6 +7,8 @@
 </head>
 <body>
 
+<%@include file="../../components/navbar.jsp"%>
+
 <div class="container mt-5">
 
     <h1>${student.getLastName()} ${student.getFirstName()} ${student.getSecondName()}</h1>

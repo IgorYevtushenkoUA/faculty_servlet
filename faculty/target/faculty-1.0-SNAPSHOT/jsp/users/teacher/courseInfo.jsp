@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<%@include file="../../components/navbar.jsp"%>
+
 <div class="container mt-5">
     <%--    <div class="mt-2">--%>
     <%--        <form th:action="@{/teacher/{courseId} (courseId=${courseId})}" method="get">--%>

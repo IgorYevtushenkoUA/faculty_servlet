@@ -8,6 +8,9 @@
 </head>
 <body>
 
+
+<%@include file="/jsp/components/navbar.jsp"%>
+
 <div class="container">
     <div>
         <form action="controller" method="get">

@@ -10,6 +10,8 @@ import com.example.faculty.model.entity.User;
 
 import javax.servlet.http.HttpSession;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class RegisterCommand extends CommandFactory {
     @Override
     public String doGet() {
@@ -25,6 +27,7 @@ public class RegisterCommand extends CommandFactory {
         String email = request.getParameter("email");
         String course = request.getParameter("course");
         String password = request.getParameter("password");
+        request.setAttribute("role", getRole(request));
 
         UserDao userDao = new UserDaoImpl();
         if (firstName == null || lastName == null || secondName == null || email == null || course == null || password == null) {

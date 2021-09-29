@@ -9,6 +9,8 @@ import com.example.faculty.dao.model.impl.TopicDaoImpl;
 import com.example.faculty.dao.model.impl.UserDaoImpl;
 import com.example.faculty.model.entity.Course;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class CreateCourseCommand extends CommandFactory {
     @Override
     public String doGet() {
@@ -18,6 +20,7 @@ public class CreateCourseCommand extends CommandFactory {
 
         request.setAttribute("topics", topicDao.findAll());
         request.setAttribute("teachers", userDao.findAllTeacher());
+        request.setAttribute("role", getRole(request));
 
         return "jsp/users/admin/createCourse.jsp";
     }

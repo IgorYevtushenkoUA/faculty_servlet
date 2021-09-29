@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<%@include file="../../components/navbar.jsp"%>
+
 <div class="container mt-5">
     <h1>
         <c:out value="${teacher.getLastName()} ${teacher.getFirstName()} ${teacher.getSecondName()}"/>

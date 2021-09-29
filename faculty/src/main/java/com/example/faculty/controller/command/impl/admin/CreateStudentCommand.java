@@ -6,9 +6,12 @@ import com.example.faculty.dao.model.impl.UserDaoImpl;
 import com.example.faculty.model.entity.Student;
 import com.example.faculty.model.entity.User;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class CreateStudentCommand extends CommandFactory {
     @Override
     public String doGet() {
+        request.setAttribute("role", getRole(request));
         return "jsp/users/admin/createStudent.jsp";
     }
 

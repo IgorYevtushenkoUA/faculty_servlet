@@ -7,6 +7,8 @@
 </head>
 <body>
 
+<%@include file="../../components/navbar.jsp"%>
+
 <div class="container mt-5">
 
     <div class="d-flex justify-content-center">

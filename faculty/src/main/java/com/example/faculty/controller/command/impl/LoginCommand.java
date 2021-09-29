@@ -11,10 +11,13 @@ import com.example.faculty.model.entity.User;
 
 import javax.servlet.http.HttpSession;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class LoginCommand extends CommandFactory {
 
     @Override
     public String doGet() {
+        request.setAttribute("role", getRole(request));
         return PageConstants.LOGIN;
     }
 

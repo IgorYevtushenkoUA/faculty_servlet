@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<%@include file="../../components/navbar.jsp"%>
 
 <div class="container p-3">
 

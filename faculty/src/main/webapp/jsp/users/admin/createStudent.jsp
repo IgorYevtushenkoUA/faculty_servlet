@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+
+<%@include file="../../components/navbar.jsp"%>
+
 <div class="container mt-5">
 
     <%@include file="/jsp/components/createPanel.jsp" %>

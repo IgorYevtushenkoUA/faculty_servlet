@@ -7,6 +7,8 @@ import com.example.faculty.model.entity.User;
 
 import javax.servlet.http.HttpSession;
 
+import static com.example.faculty.controller.constant.Methods.getRole;
+
 public class TeacherCommand extends CommandFactory {
 
     @Override
@@ -18,6 +20,7 @@ public class TeacherCommand extends CommandFactory {
 
         request.setAttribute("teacher", user);
         request.setAttribute("courses", courseDao.findAll());
+        request.setAttribute("role", getRole(request));
 
         return "jsp/users/teacher/mainPage.jsp";
     }
