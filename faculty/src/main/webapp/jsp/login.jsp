@@ -1,28 +1,34 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
+
 <%@include file="/jsp/components/navbar.jsp" %>
 
 <div class="container mt-5">
     <form action="controller" method="post">
         <input type="hidden" name="command" value="login">
         <div class="input-group p-1">
-            <span class="input-group-text">Email</span>
-            <input type="email" class="form-control" name="email" placeholder="Enter Email">
+            <span class="input-group-text"><fmt:message key="login.email"/><fmt:message
+                    key="login.email"/></span>
+            <input type="email" class="form-control" name="email" placeholder="<fmt:message
+                    key="login.placeholder.email"/>">
         </div>
 
         <div class="input-group p-1">
-            <span class="input-group-text">Password</span>
-            <input type="password" class="form-control" name="password" placeholder="Enter Password">
+            <span class="input-group-text"><fmt:message key="login.password"/><fmt:message
+                    key="login.password"/></span>
+            <input type="password" class="form-control" name="password" placeholder="<fmt:message
+                    key="login.placeholder.password"/>">
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="login.login"/></button>
     </form>
 </div>
 

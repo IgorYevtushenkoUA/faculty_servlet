@@ -16,10 +16,10 @@
         <div class=" d-flex justify-content-center">
             <ul class="nav  justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/teachers">Teacher</a>
+                    <a class="nav-link" href="controller?command=teachers">Teacher</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/students">Student</a>
+                    <a class="nav-link" href="controller?command=students">Student</a>
                 </li>
             </ul>
         </div>
@@ -30,12 +30,18 @@
         <c:if test="${role eq 'ROLE_GUEST'}">
             <div>
                 <ul class="nav  justify-content-end">
-                        <%--                    <li class="nav-item">--%>
-                        <%--                        <a class="nav-link" th:href="@{''(lang=en)}">ENG</a>--%>
-                        <%--                    </li>--%>
-                        <%--                    <li class="nav-item">--%>
-                        <%--                        <a class="nav-link" th:href="@{''(lang=ua)}">UA</a>--%>
-                        <%--                    </li>--%>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link active"
+                           ><input type="hidden" name="lang" value="en">
+                            EN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link active"
+                        ><input type="hidden" name="lang" value="ua">
+                            UA
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="controller?command=login">Login</a>
                     </li>
@@ -49,8 +55,16 @@
         <c:if test="${role ne 'ROLE_GUEST'}">
             <div>
                 <ul class="nav  justify-content-end">
-                        <%--                    <li class="nav-item"><a class="nav-link" href="@{''(lang=en)}">ENG</a></li>--%>
-                        <%--                    <li class="nav-item"><a class="nav-link" th:href="@{''(lang=ua)}">UA</a></li>--%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=en">
+                            EN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=ua">
+                            UA
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link"
                                 <c:if test="${role eq 'ROLE_ADMIN'}"> href="controller?command=admin"</c:if>

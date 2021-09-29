@@ -1,15 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>JSP - Hello World</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
 
-
-<%@include file="/jsp/components/navbar.jsp"%>
+<%@include file="/jsp/components/navbar.jsp" %>
 
 <div class="container">
     <div>
@@ -17,49 +17,50 @@
             <input type="hidden" name="command" value="courses">
             <div class="">
                 <div class="input-group p-1">
-                    <span class="input-group-text">Course</span>
+                    <span class="input-group-text"><fmt:message key="courses.course"/></span>
                     <input class="form-control" aria-label="With textarea" type="text" name="course"
-                           placeholder="Назва дисципліни">
+                           placeholder="<fmt:message key="courses.placeholder.course"/>" >
 
                     <div>
                         <input id="asc" type="radio" name="sortType" value="ASC"
                                <c:if test="${sortType eq 'ASC'}">checked</c:if> hidden/>
-                        <label for="asc" id="ascl" class="${classes.get(0)}" onclick="setASC()">A-Z</label>
+                        <label for="asc" id="ascl" class="${classes.get(0)}" onclick="setASC()"><fmt:message
+                                key="courses.asc"/></label>
                     </div>
 
                     <div>
                         <input id="desc" type="radio" name="sortType" value="DESC"
                                <c:if test="${sortType eq 'DESC'}">checked</c:if> hidden/>
-                        <label for="desc" id="descl" class="${classes.get(1)}" onclick="setDESC()">Z-A</label>
+                        <label for="desc" id="descl" class="${classes.get(1)}" onclick="setDESC()"><fmt:message
+                                key="courses.desc"/></label>
                     </div>
 
                 </div>
 
                 <div class="input-group p-1">
-                    <span class="input-group-text">Duration</span>
+                    <span class="input-group-text"><fmt:message key="courses.duration"/></span>
                     <input class="form-control" aria-label="With textarea" type="number" name="duration"
-                           placeholder="Тривалість" min="1" max="2">
+                           placeholder="<fmt:message key="courses.placeholder.duration"/>" min="1" max="2">
                 </div>
                 <div class="input-group p-1">
-                    <span class="input-group-text">Capacity</span>
+                    <span class="input-group-text"><fmt:message key="courses.capacity"/></span>
                     <input class="form-control" aria-label="With textarea" type="number" name="capacity"
-                           placeholder="Кількість студентів" min="10" max="150">
+                           placeholder="<fmt:message key="courses.placeholder.capacity"/>" min="10" max="150">
                 </div>
 
                 <div class="input-group p-1">
-                    <span class="input-group-text">Topic</span>
+                    <span class="input-group-text"><fmt:message key="courses.topic"/></span>
                     <input class="form-control" aria-label="With textarea" type="text" name="topic"
-                           placeholder="Кількість студентів">
+                           placeholder="<fmt:message key="courses.placeholder.topic"/>">
                 </div>
 
                 <div class="input-group p-1">
-                    <span class="input-group-text">Teacher</span>
+                    <span class="input-group-text"><fmt:message key="courses.teacher"/></span>
                     <input class="form-control" aria-label="With textarea" type="text" name="teacher"
-                           placeholder="ПІБ викладача">
+                           placeholder="<fmt:message key="courses.placeholder.teacher"/>">
                 </div>
             </div>
-            <%--            <button type="submit" class="btn btn-primary btn-lg btn-block">Filter</button>--%>
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Filter">
+            <button type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="courses.filter"/></button>
         </form>
     </div>
 
@@ -68,11 +69,11 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Capacity</th>
-                <th>Semester</th>
-                <th>Duration</th>
+                <th><fmt:message key="courses.title"/></th>
+                <th><fmt:message key="courses.description"/></th>
+                <th><fmt:message key="courses.capacity"/></th>
+                <th><fmt:message key="courses.semester"/></th>
+                <th><fmt:message key="courses.duration"/></th>
             </tr>
             </thead>
             <tbody>

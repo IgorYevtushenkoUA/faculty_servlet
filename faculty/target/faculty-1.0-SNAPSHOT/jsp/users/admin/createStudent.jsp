@@ -1,9 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
 
 <%@include file="../../components/navbar.jsp"%>
@@ -17,36 +20,36 @@
             <input type="hidden" name="command" value="student-create">
 
             <div class="input-group p-1">
-                <span class="input-group-text">FirstName</span>
-                <input type="text" class="form-control" name="firstName" placeholder="Enter First Name">
+                <span class="input-group-text"><fmt:message key="studentRegister.firstName"/>FirstName</span>
+                <input type="text" class="form-control" name="firstName" placeholder="<fmt:message key="register.placeholder.firstName"/>">
             </div>
 
             <div class="input-group p-1">
-                <span class="input-group-text">SecondName</span>
-                <input type="text" class="form-control" name="secondName" placeholder="Enter Second Name">
+                <span class="input-group-text"><fmt:message key="studentRegister.secondName"/></span>
+                <input type="text" class="form-control" name="secondName" placeholder="<fmt:message key="register.placeholder.secondName"/>">
             </div>
 
             <div class="input-group p-1">
-                <span class="input-group-text">LastName</span>
-                <input type="text" class="form-control" name="lastName" placeholder="Enter Last Name">
+                <span class="input-group-text"><fmt:message key="studentRegister.lastName"/></span>
+                <input type="text" class="form-control" name="lastName" placeholder="<fmt:message key="register.placeholder.lastName"/>">
             </div>
 
             <div class="input-group p-1">
-                <span class="input-group-text">Email</span>
-                <input type="email" class="form-control" name="email" placeholder="Enter Email">
+                <span class="input-group-text"><fmt:message key="studentRegister.email"/></span>
+                <input type="email" class="form-control" name="email" placeholder="<fmt:message key="register.placeholder.email"/>">
             </div>
 
             <div class="input-group p-1">
-                <span class="input-group-text">Password</span>
-                <input type="password" class="form-control" name="password" placeholder="Enter Password">
+                <span class="input-group-text"><fmt:message key="studentRegister.password"/></span>
+                <input type="password" class="form-control" name="password" placeholder="<fmt:message key="register.placeholder.password"/>">
             </div>
 
             <div class="input-group p-1">
-                <span class="input-group-text">Course</span>
+                <span class="input-group-text"><fmt:message key="studentRegister.course"/></span>
                 <input type="number" name="courseNum" class="form-control" min="1" max="4">
             </div>
 
-            <button type="submit" class="btn btn-light btn-lg btn-block">Create</button>
+            <button type="submit" class="btn btn-light btn-lg btn-block"><fmt:message key="courseCreate.create"/></button>
         </form>
     </div>
 </div>

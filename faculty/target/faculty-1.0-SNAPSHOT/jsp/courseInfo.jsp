@@ -1,14 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
-<%@include file="/jsp/components/navbar.jsp"%>
+
+<%@include file="/jsp/components/navbar.jsp" %>
 
 <div class="container mt-5">
 
@@ -20,32 +21,32 @@
         <table class="table table-bordered border-primary">
             <tbody>
             <tr>
-                <td>Topic</td>
+                <td><fmt:message key="course.topic"/></td>
                 <th><c:out value="${topic.getName()}"/></th>
             </tr>
 
             <tr>
-                <td>Capacity</td>
+                <td><fmt:message key="course.capacity"/></td>
                 <th><c:out value="${course.getCapacity()}"/></th>
             </tr>
 
             <tr>
-                <td>Semester</td>
+                <td><fmt:message key="course.semester"/></td>
                 <th><c:out value="${course.getSemesterStart()}"/></th>
             </tr>
 
             <tr>
-                <td>Duration</td>
+                <td><fmt:message key="course.duration"/></td>
                 <th><c:out value="${course.getSemesterDuration()}"/></th>
             </tr>
 
             <tr>
-                <td>Description</td>
+                <td><fmt:message key="course.description"/></td>
                 <th><c:out value="${course.getDescription()}"/></th>
             </tr>
 
             <tr>
-                <td>Teacher</td>
+                <td><fmt:message key="course.teacher"/></td>
                 <th>TEACHER TODO</th>
             </tr>
 
@@ -64,9 +65,9 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Course Num</th>
-            <th>Recording time</th>
+            <th><fmt:message key="course.name"/></th>
+            <th><fmt:message key="course.course"/></th>
+            <th><fmt:message key="course.recordTime"/></th>
         </tr>
         </thead>
         <tbody>
@@ -86,15 +87,14 @@
 
     <c:if test="${role eq 'ROLE_GUEST'}">
         <div>
-            <a class="btn btn-primary btn-lg btn-block" href="controller?command=login" role="button">Залогінься, щоб
-                зареєструватися</a>
+            <a class="btn btn-primary btn-lg btn-block" href="controller?command=login" role="button"><fmt:message key="course.login"/></a>
         </div>
     </c:if>
 
     <c:if test="${role eq 'ROLE_ADMIN'}">
         <div>
             <a class="btn btn-primary btn-lg btn-block"
-               href="controller?command=course-edit&id=${course.getId()}">EDIT</a>
+               href="controller?command=course-edit&id=${course.getId()}"><fmt:message key="courseInfo.edit"/></a>
         </div>
     </c:if>
 
@@ -106,12 +106,12 @@
                 <input type="hidden" name="studentId" value="${studentId}">
                 <c:if test="${!doEnroll}">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" name="action" value="enroll">
-                        Записатися
+                        <fmt:message key="course.enroll"/>
                     </button>
                 </c:if>
                 <c:if test="${doEnroll}">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" name="action" value="drop_out">
-                        Виписатися
+                        <fmt:message key="course.drop_out"/>
                     </button>
                 </c:if>
             </form>

@@ -1,36 +1,27 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Title</title>
-</head>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
 
-<%@include file="../../components/navbar.jsp"%>
+<%@include file="../../components/navbar.jsp" %>
 
 <div class="container mt-5">
-    <%--    <div class="mt-2">--%>
-    <%--        <form th:action="@{/teacher/{courseId} (courseId=${courseId})}" method="get">--%>
-    <%--            <div class="input-group p-1">--%>
-    <%--                <span class="input-group-text" th:text="#{courseInfo.year}"></span>--%>
-    <%--                <input class="form-control" aria-label="With textarea" type="number" name="year"--%>
-    <%--                       placeholder="Рік" th:min="2021" th:max="2030">--%>
-    <%--            </div>--%>
-    <%--            <button type="submit" class="btn btn-primary btn-lg btn-block mt-2">Search</button>--%>
-    <%--        </form>--%>
-    <%--    </div>--%>
 
     <div class="mt-5">
         <table class="table border-primary table-bordered">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Student</th>
-                <th>Course</th>
-                <th>Recording Time</th>
-                <th>Mark</th>
+                <th><fmt:message key="courseInfo.student"/></th>
+                <th><fmt:message key="courseInfo.course"/></th>
+                <th><fmt:message key="courseInfo.recordTime"/></th>
+                <th><fmt:message key="courseInfo.mark"/></th>
                 <th></th>
             </tr>
             </thead>
@@ -38,7 +29,7 @@
             <c:forEach var="student" items="${studentDto}" varStatus="iter">
                 <tr>
                     <form action="controller" method="post">
-                        <input type="hidden" name="command" value="teacher-course" >
+                        <input type="hidden" name="command" value="teacher-course">
                         <input value="${id}" name="courseId" hidden>
                         <input value="${student.getStudent().getId()}" name="studentId" hidden>
 
@@ -55,9 +46,8 @@
                         <td>
                             <input type="number" value="${student.getMark()}" name="mark" min="1" max="100"/>
                         </td>
-                        <td><c:out value="${iter.index+1}"/></td>
                         <td>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary"><fmt:message key="courseInfo.save"/></button>
                         </td>
                     </form>
                 </tr>

@@ -1,11 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
 
 <%@include file="../../components/navbar.jsp"%>
@@ -25,7 +26,7 @@
                 <option value="FINISHED" <c:if test="${type eq 'FINISHED'}">selected="selected"</c:if>>Finished</option>
             </select>
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                <button class="btn btn-outline-secondary" type="submit"><fmt:message key="studentList.search"/></button>
             </div>
         </div>
     </form>
@@ -34,8 +35,8 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Course Name</th>
-            <th>Mark</th>
+            <th><fmt:message key="studentList.name"/></th>
+            <th><fmt:message key="studentPersonalPage.mark"/></th>
         </tr>
         </thead>
         <tbody>

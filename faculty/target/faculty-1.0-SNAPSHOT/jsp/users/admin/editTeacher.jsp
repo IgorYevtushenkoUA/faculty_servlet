@@ -1,10 +1,12 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
+<head></head>
 <body>
 
 <%@include file="../../components/navbar.jsp"%>
@@ -19,7 +21,7 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>Course</td>
+            <td><fmt:message key="course.course"/></td>
             <td></td>
         </tr>
         </thead>
@@ -35,7 +37,7 @@
                         <input type="hidden" name="id" value="${teacher.getId()}">
                         <input type="hidden" name="courseId" value="${course.getId()}">
                         <input type="hidden" name="action" value="delete">
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-danger"><fmt:message key="courseInfo.delete"/></button>
                     </form>
                 </td>
             </tr>
@@ -59,7 +61,7 @@
                     </c:forEach>
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">ADD</button>
+                    <button class="btn btn-outline-secondary" type="submit"><fmt:message key="teacherInfo.add"/></button>
                 </div>
             </div>
         </form>

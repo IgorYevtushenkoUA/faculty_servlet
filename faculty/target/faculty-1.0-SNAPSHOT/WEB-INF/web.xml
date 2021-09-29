@@ -4,15 +4,14 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-<!--    <filter>-->
-<!--        <filter-name>EncodingFilter</filter-name>-->
-<!--        <filter-class>com.example.faculty.filter.EncodingFilter</filter-class>-->
-<!--    </filter>-->
-<!--    <filter-mapping>-->
-<!--        <filter-name>EncodingFilter</filter-name>-->
-<!--        <url-pattern>/*</url-pattern>-->
-<!--    </filter-mapping>-->
-
+    <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>com.example.faculty.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>com.example.faculty.filter.AuthorizationFilter</filter-class>
