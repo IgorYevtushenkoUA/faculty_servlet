@@ -19,6 +19,7 @@ public class CommandInvoker {
         commands.put("register", RegisterCommand::new);
         commands.put("courses", ListCoursesCommand::new);
         commands.put("course", CourseInfoCommand::new);
+        commands.put("logout", LogoutCommand::new);
         // student
         commands.put("student", StudentCommand::new);
         // teacher
