@@ -27,7 +27,7 @@ public class StudentCommand extends CommandFactory {
         request.setAttribute("type", statusType);
         request.setAttribute("role", getRole(request));
 
-        return "jsp/users/student/mainPage.jsp";
+        return "WEB-INF/jsp/users/student/mainPage.jsp";
     }
 
     @Override

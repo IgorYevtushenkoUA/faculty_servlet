@@ -9,7 +9,7 @@ public class AdminCommand extends CommandFactory {
     @Override
     public String doGet() {
         request.setAttribute("role", getRole(request));
-        return "jsp/users/admin/mainPage.jsp";
+        return "WEB-INF/jsp/users/admin/mainPage.jsp";
     }
 
     @Override

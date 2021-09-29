@@ -16,7 +16,7 @@ public class ListStudentCommand extends CommandFactory {
 
         request.setAttribute("students", students);
         request.setAttribute("role", getRole(request));
-        return "jsp/users/admin/listStudent.jsp";
+        return "WEB-INF/jsp/users/admin/listStudent.jsp";
     }
 
     private List<Student> getStudents(String name) {

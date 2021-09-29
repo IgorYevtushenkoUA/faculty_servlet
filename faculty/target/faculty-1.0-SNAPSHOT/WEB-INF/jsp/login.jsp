@@ -9,7 +9,7 @@
 <head></head>
 <body>
 
-<%@include file="/jsp/components/navbar.jsp" %>
+<%@include file="/WEB-INF/jsp/components/navbar.jsp" %>
 
 <div class="container mt-5">
     <form action="controller" method="post">

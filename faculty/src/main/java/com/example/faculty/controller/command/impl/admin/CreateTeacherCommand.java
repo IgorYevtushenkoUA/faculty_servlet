@@ -12,7 +12,7 @@ public class CreateTeacherCommand extends CommandFactory {
     @Override
     public String doGet() {
         request.setAttribute("role", getRole(request));
-        return "jsp/users/admin/createTeacher.jsp";
+        return "WEB-INF/jsp/users/admin/createTeacher.jsp";
     }
 
     @Override

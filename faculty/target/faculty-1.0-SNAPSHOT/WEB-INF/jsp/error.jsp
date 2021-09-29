@@ -9,7 +9,7 @@
 <head></head>
 <body>
 
-<%@include file="/jsp/components/navbar.jsp" %>
+<%@include file="/WEB-INF/jsp/components/navbar.jsp" %>
 
 <div class="container">
     <div class="mt-5 justify-content-center">

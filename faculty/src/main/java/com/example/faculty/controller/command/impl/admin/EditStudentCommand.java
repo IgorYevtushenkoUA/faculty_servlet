@@ -18,7 +18,7 @@ public class EditStudentCommand extends CommandFactory {
                 userDao.findStudentById(Integer.parseInt(request.getParameter("id"))));
         request.setAttribute("role", getRole(request));
 
-        return "jsp/users/admin/editStudent.jsp";
+        return "WEB-INF/jsp/users/admin/editStudent.jsp";
     }
 
     @Override

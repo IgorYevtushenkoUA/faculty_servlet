@@ -15,19 +15,18 @@ import static com.example.faculty.controller.constant.Methods.getRole;
 public class RegisterCommand extends CommandFactory {
     @Override
     public String doGet() {
+        request.setAttribute("role", getRole(request));
         return PageConstants.REGISTER;
     }
 
     @Override
     public String doPost() {
-        HttpSession session = request.getSession();
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String secondName = request.getParameter("secondName");
         String email = request.getParameter("email");
         String course = request.getParameter("course");
         String password = request.getParameter("password");
-        request.setAttribute("role", getRole(request));
 
         UserDao userDao = new UserDaoImpl();
         if (firstName == null || lastName == null || secondName == null || email == null || course == null || password == null) {

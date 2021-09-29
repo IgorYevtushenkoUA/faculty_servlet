@@ -44,9 +44,9 @@ public class ListCoursesCommand extends CommandFactory {
         request.setAttribute("role", getRole(request));
 
         if (courseId == null || courseId.isEmpty())
-            return "jsp/courses.jsp";
+            return "WEB-INF/jsp/courses.jsp";
 
-        return "jsp/course.jsp";
+        return "WEB-INF/jsp/course.jsp";
     }
 
     private String getParam(String param) {

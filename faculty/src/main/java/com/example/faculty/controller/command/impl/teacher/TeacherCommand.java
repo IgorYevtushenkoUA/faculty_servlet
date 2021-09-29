@@ -22,7 +22,7 @@ public class TeacherCommand extends CommandFactory {
         request.setAttribute("courses", courseDao.findAll());
         request.setAttribute("role", getRole(request));
 
-        return "jsp/users/teacher/mainPage.jsp";
+        return "WEB-INF/jsp/users/teacher/mainPage.jsp";
     }
 
     @Override

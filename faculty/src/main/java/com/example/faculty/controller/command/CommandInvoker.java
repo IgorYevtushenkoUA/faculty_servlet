@@ -14,6 +14,7 @@ public class CommandInvoker {
     private static Map<String, CommandCreate> commands = new HashMap<>();
 
     static {
+        commands.put("", LogoutCommand::new);
         // guest
         commands.put("login", LoginCommand::new);
         commands.put("register", RegisterCommand::new);
@@ -38,7 +39,6 @@ public class CommandInvoker {
         commands.put("course-edit", EditCourseCommand::new);
         commands.put("teacher-edit", EditTeacherCommand::new);
         commands.put("student-edit", EditStudentCommand::new);
-        commands.put("", AdminCommand::new);
     }
 
     public static CommandFactory getCommand(String commandName) {

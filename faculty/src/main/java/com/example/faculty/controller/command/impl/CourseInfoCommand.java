@@ -34,7 +34,7 @@ public class CourseInfoCommand extends CommandFactory {
 //                ? userDao.findTeacherById(course.getTeacherId())
 //                : null;
 
-        return "jsp/courseInfo.jsp";
+        return "WEB-INF/jsp/courseInfo.jsp";
     }
 
     @Override

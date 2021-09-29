@@ -3,7 +3,7 @@
 
 
     <div class="d-flex justify-content-lg-start">
-        <a class="navbar-brand" href="/controller?command=courses">Faculty ${role}</a>
+        <a class="navbar-brand" href="/">Faculty</a>
         <ul class="nav ">
             <li class="nav-item active">
                 <a class="nav-link" href="controller?command=courses">Courses</a>
@@ -52,7 +52,7 @@
             </div>
         </c:if>
 
-        <c:if test="${role ne 'ROLE_GUEST'}">
+        <c:if test="${!role eq 'ROLE_GUEST'}">
             <div>
                 <ul class="nav  justify-content-end">
                     <li class="nav-item">

@@ -13,7 +13,7 @@
 
 <div class="container mt-5">
 
-    <%@include file="/jsp/components/createPanel.jsp" %>
+    <%@include file="/WEB-INF/jsp/components/createPanel.jsp" %>
 
     <div class="mt-5">
         <form action="controller" method="post">

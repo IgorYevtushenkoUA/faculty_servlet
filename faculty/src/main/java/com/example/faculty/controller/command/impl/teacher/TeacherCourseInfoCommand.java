@@ -25,7 +25,7 @@ public class TeacherCourseInfoCommand extends CommandFactory {
         request.setAttribute("studentDto", userDao.findAllEnrolledStudentToCourse(courseId));
         request.setAttribute("role", getRole(request));
 
-        return "jsp/users/teacher/courseInfo.jsp";
+        return "WEB-INF/jsp/users/teacher/courseInfo.jsp";
     }
 
     @Override

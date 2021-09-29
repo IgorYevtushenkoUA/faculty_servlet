@@ -14,7 +14,7 @@ public class ListTeacherCommand extends CommandFactory {
     public String doGet() {
         request.setAttribute("teachers", getTeachers(request.getParameter("name")));
         request.setAttribute("role", getRole(request));
-        return "jsp/users/admin/listTeacher.jsp";
+        return "WEB-INF/jsp/users/admin/listTeacher.jsp";
     }
 
     private List<Teacher> getTeachers(String name) {

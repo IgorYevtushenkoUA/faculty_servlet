@@ -26,7 +26,7 @@ public class EditTeacherCommand extends CommandFactory {
         request.setAttribute("teacherCourses", courseDao.findAllTeachersCourses(id));
         request.setAttribute("freeCourses", courseDao.findFreeCourses());
 
-        return "jsp/users/admin/editTeacher.jsp";
+        return "WEB-INF/jsp/users/admin/editTeacher.jsp";
     }
 
     @Override

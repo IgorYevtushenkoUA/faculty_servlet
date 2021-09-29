@@ -22,7 +22,7 @@ public class CreateCourseCommand extends CommandFactory {
         request.setAttribute("teachers", userDao.findAllTeacher());
         request.setAttribute("role", getRole(request));
 
-        return "jsp/users/admin/createCourse.jsp";
+        return "WEB-INF/jsp/users/admin/createCourse.jsp";
     }
 
     @Override
