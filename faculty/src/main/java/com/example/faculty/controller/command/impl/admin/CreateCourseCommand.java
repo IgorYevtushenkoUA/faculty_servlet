@@ -31,13 +31,6 @@ public class CreateCourseCommand extends CommandFactory {
         CourseDao courseDao = new CourseDaoImpl();
 
         Course course = new Course();
-        System.out.println("course :" + request.getParameter("course"));
-        System.out.println("topicId :" + request.getParameter("topicId"));
-        System.out.println("capacity :" + request.getParameter("capacity"));
-        System.out.println("semester :" + request.getParameter("semesterStart"));
-        System.out.println("duration :" + request.getParameter("duration"));
-        System.out.println("description :" + request.getParameter("description"));
-        System.out.println("teacherId :" + request.getParameter("teacherId"));
         course.setName(request.getParameter("course"));
         course.setTopicId(Integer.parseInt(request.getParameter("topicId")));
         course.setCapacity(Integer.parseInt(request.getParameter("capacity")));

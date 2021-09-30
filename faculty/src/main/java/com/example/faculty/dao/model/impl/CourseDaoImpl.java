@@ -32,7 +32,6 @@ public class CourseDaoImpl implements CourseDao {
 
     private void prepareStatementForUpdateCourse(PreparedStatement ps, Course course) {
         i = 1;
-        System.out.println("here before");
         try {
             ps.setInt(i++, course.getTopicId());
             ps.setInt(i++, course.getCapacity());
@@ -42,7 +41,6 @@ public class CourseDaoImpl implements CourseDao {
             ps.setInt(i++, course.getTeacherId());
             ps.setString(i++, course.getName());
             ps.setInt(i++, course.getId());
-            System.out.println("here after");
         } catch (SQLException e) {
 
         }

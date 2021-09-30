@@ -32,8 +32,6 @@ public class EditTeacherCommand extends CommandFactory {
     @Override
     public String doPost() {
 
-        System.out.println(request.getParameter("id"));
-        System.out.println(request.getParameter("courseId"));
 
         int teacherId = Integer.parseInt(request.getParameter("id"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));

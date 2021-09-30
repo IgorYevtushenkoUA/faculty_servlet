@@ -38,16 +38,12 @@ public class AuthorizationFilter implements Filter {
         TopicDao topicDao = new TopicDaoImpl();
         UserDao userDao = new UserDaoImpl();
 
-        System.out.println(studentHasCourseDao.isStudentEnrolled(9,3));
-
-
         System.out.println("----- END -----");
     }
 
     private boolean isAllowed(ServletRequest servletRequest) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String command = request.getParameter("command");
-        System.out.println("command : [" + command + "]");
         if (command == null || command.isEmpty()) {
             return false;
         }
@@ -64,12 +60,9 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("doFilter man");
         if (isAllowed(servletRequest)) {
-            System.out.println("isAllow");
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            System.out.println("not isAllow");
             String errorMessage = "You do not have permission to access the requested command!";
             servletRequest.setAttribute("error_message", errorMessage);
             servletRequest.getRequestDispatcher(PageConstants.ERROR).forward(servletRequest, servletResponse);

@@ -3,7 +3,7 @@
 
 
     <div class="d-flex justify-content-lg-start">
-        <a class="navbar-brand" href="/">Faculty ${role}</a>
+        <a class="navbar-brand" href="/">Faculty </a>
         <ul class="nav ">
             <li class="nav-item active">
                 <a class="nav-link" href="controller?command=courses"><fmt:message key="navbar.courses"/></a>

@@ -45,10 +45,10 @@
                 <th><c:out value="${course.getDescription()}"/></th>
             </tr>
 
-            <tr>
-                <td><fmt:message key="course.teacher"/></td>
-                <th>TEACHER TODO</th>
-            </tr>
+<%--            <tr>--%>
+<%--                <td><fmt:message key="course.teacher"/></td>--%>
+<%--                <th>TEACHER TODO</th>--%>
+<%--            </tr>--%>
 
             <%--                        <tr>--%>
             <%--                            <td th:text="#{course.teacher}"></td>--%>
