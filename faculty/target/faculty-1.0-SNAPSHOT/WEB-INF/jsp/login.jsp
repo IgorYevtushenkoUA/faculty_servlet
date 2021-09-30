@@ -28,6 +28,10 @@
                     key="login.placeholder.password"/>">
         </div>
 
+        <div>
+            <span>${messages}</span>
+        </div>
+
         <button type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="login.login"/></button>
     </form>
 </div>

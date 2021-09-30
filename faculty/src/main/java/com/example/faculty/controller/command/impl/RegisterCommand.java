@@ -40,6 +40,6 @@ public class RegisterCommand extends CommandFactory {
         Student student = new Student(user, Integer.parseInt(course));
         userDao.saveStudent(student);
         System.out.println(student);
-        return null;
+        return "controller?command=login";
     }
 }

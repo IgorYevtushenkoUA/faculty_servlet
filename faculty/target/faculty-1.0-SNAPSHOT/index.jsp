@@ -48,7 +48,6 @@
 </div>
 
 <img src="https://wittysparks.com/wp-content/uploads/2020/10/tips-to-choose-the-right-college.jpg"
-<%--<img src="https://i.pinimg.com/originals/ae/e9/40/aee940d824ff8dedd3121335fc3a9fb4.jpg"--%>
      alt="image"  width="100%" height="90%"/>
 
 

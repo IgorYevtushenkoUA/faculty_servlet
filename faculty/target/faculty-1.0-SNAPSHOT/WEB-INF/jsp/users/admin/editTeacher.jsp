@@ -9,7 +9,7 @@
 <head></head>
 <body>
 
-<%@include file="../../components/navbar.jsp"%>
+<%@include file="../../components/navbar.jsp" %>
 
 <div class="container mt-5">
 
@@ -45,26 +45,28 @@
         </tbody>
     </table>
 
-        <form action="controller" method="post">
+    <form action="controller" method="post">
 
-            <div class="input-group">
-                <span class="input-group-text">Course</span>
-                <select name="courseId" class="custom-select">
-                    <c:forEach items="${freeCourses}" var="course">
-                        <option value="${course.getId()}">${course.getName()}
-                            <input type="hidden" name="command" value="teacher-edit">
-                            <input type="hidden" name="id" value="${teacher.getId()}">
-                            <input type="hidden" name="courseId" value="${course.getId()}">
-                            <input type="hidden" name="action" value="add">
-                        </option>
+        <div class="input-group">
+            <span class="input-group-text">Course</span>
+            <select name="courseId" class="custom-select">
+                <c:forEach items="${freeCourses}" var="course">
 
-                    </c:forEach>
-                </select>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit"><fmt:message key="teacherInfo.add"/></button>
-                </div>
+                    <option value="${course.getId()}">
+                            ${course.getName()}
+                        <input type="hidden" name="command" value="teacher-edit">
+                        <input type="hidden" name="id" value="${teacher.getId()}">
+                        <input type="hidden" name="courseId" value="${course.getId()}">
+                        <input type="hidden" name="action" value="add">
+                    </option>
+                </c:forEach>
+
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit"><fmt:message key="teacherInfo.add"/></button>
             </div>
-        </form>
+        </div>
+    </form>
 </div>
 
 </body>

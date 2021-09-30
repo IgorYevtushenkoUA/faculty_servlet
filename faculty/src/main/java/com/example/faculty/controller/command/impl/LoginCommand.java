@@ -17,6 +17,7 @@ public class LoginCommand extends CommandFactory {
 
     @Override
     public String doGet() {
+
         request.setAttribute("role", getRole(request));
         return PageConstants.LOGIN;
     }
@@ -32,10 +33,12 @@ public class LoginCommand extends CommandFactory {
         User user = userDao.findByEmail(email);
         if (user == null) {
             System.out.println("user with this email not found");
-            return null;
+            request.setAttribute("messages", "User with this email not found");
+            return "controller?command=login";
         } else if (!user.getPassword().equals(password)) {
             System.out.println("user with this password not found");
-            return null;
+            request.setAttribute("messages", "Password incorrect");
+            return "controller?command=login";
         } else {
             session.setAttribute("user", user);
             session.setAttribute("role", roleDao.findById(user.getRoleId()).getName());

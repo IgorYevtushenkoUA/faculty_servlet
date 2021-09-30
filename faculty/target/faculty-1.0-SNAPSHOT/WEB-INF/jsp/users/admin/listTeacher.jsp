@@ -14,11 +14,11 @@
 <div class="container mt-5">
     <div class="mt-5">
         <form action="controller" method="get">
-            <input type="hidden" name="command" value="students">
+            <input type="hidden" name="command" value="teachers">
             <div class="input-group p-1">
-                <span class="input-group-text"><fmt:message key="courseInfo.student"/>Student</span>
+                <span class="input-group-text"><fmt:message key="courses.teacher"/></span>
                 <input class="form-control" aria-label="With textarea" type="text" name="name"
-                       placeholder="<fmt:message key="courses.placeholder.student"/>">
+                       placeholder="<fmt:message key="courses.placeholder.teacher"/>">
             </div>
             <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"><fmt:message key="teacherList.search"/></button>
         </form>
