@@ -112,7 +112,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public Course findById(int id) {
-        Course course = new Course();
+        Course course = null;
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_COURSE_BY_ID)) {
             ps.setInt(1, id);
