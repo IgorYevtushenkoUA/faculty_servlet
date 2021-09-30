@@ -17,7 +17,7 @@
             <a class="navbar-brand" href="/">Faculty </a>
             <ul class="nav ">
                 <li class="nav-item active">
-                    <a class="nav-link" href="controller?command=courses">Courses</a>
+                    <a class="nav-link" href="controller?command=courses"><fmt:message key="navbar.courses"/></a>
                 </li>
             </ul>
         </div>
@@ -36,10 +36,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=login">Login</a>
+                        <a class="nav-link" href="controller?command=login"><fmt:message key="login.login"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=register">Register</a>
+                        <a class="nav-link" href="controller?command=register"><fmt:message key="register.register"/></a>
                     </li>
                 </ul>
             </div>

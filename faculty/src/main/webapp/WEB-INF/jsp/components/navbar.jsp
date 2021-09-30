@@ -3,10 +3,10 @@
 
 
     <div class="d-flex justify-content-lg-start">
-        <a class="navbar-brand" href="/">Faculty ${role}</a>
+        <a class="navbar-brand" href="/">Faculty </a>
         <ul class="nav ">
             <li class="nav-item active">
-                <a class="nav-link" href="controller?command=courses">Courses</a>
+                <a class="nav-link" href="controller?command=courses"><fmt:message key="navbar.courses"/></a>
             </li>
         </ul>
     </div>
@@ -16,10 +16,10 @@
         <div class=" d-flex justify-content-center">
             <ul class="nav  justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="controller?command=teachers">Teacher</a>
+                    <a class="nav-link" href="controller?command=teachers"><fmt:message key="creationPanel.teachers"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="controller?command=students">Student</a>
+                    <a class="nav-link" href="controller?command=students"><fmt:message key="creationPanel.students"/></a>
                 </li>
             </ul>
         </div>
@@ -30,23 +30,23 @@
         <c:if test="${role eq 'ROLE_GUEST'}">
             <div>
                 <ul class="nav  justify-content-end">
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-item nav-link active"--%>
+<%--                           ><input type="hidden" name="lang" value="en">--%>
+<%--                            EN--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-item nav-link active"--%>
+<%--                        ><input type="hidden" name="lang" value="ua">--%>
+<%--                            UA--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
                     <li class="nav-item">
-                        <a class="nav-item nav-link active"
-                           ><input type="hidden" name="lang" value="en">
-                            EN
-                        </a>
+                        <a class="nav-link" href="controller?command=login"><fmt:message key="login.login"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-item nav-link active"
-                        ><input type="hidden" name="lang" value="ua">
-                            UA
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="controller?command=login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="controller?command=register">Register</a>
+                        <a class="nav-link" href="controller?command=register"><fmt:message key="register.register"/></a>
                     </li>
                 </ul>
             </div>
@@ -55,16 +55,16 @@
         <c:if test="${role eq 'ROLE_ADMIN' || role eq 'ROLE_TEACHER' || role eq 'ROLE_STUDENT' }">
             <div>
                 <ul class="nav  justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="?lang=en">
-                            EN
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="?lang=ua">
-                            UA
-                        </a>
-                    </li>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link" href="?lang=en">--%>
+<%--                            EN--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link" href="?lang=ua">--%>
+<%--                            UA--%>
+<%--                        </a>--%>
+<%--                    </li>--%>
                     <li class="nav-item">
                         <a class="nav-link"
                                 <c:if test="${role eq 'ROLE_ADMIN'}"> href="controller?command=admin"</c:if>
@@ -78,7 +78,7 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="controller?command=logout">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="controller?command=logout"><fmt:message key="navbar.logout"/></a></li>
                 </ul>
             </div>
         </c:if>
