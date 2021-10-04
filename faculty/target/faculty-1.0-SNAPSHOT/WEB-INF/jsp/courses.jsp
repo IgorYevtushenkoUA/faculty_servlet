@@ -19,7 +19,7 @@
                 <div class="input-group p-1">
                     <span class="input-group-text"><fmt:message key="courses.course"/></span>
                     <input class="form-control" aria-label="With textarea" type="text" name="course"
-                           placeholder="<fmt:message key="courses.placeholder.course"/>" >
+                           placeholder="<fmt:message key="courses.placeholder.course"/>">
 
                     <div>
                         <input id="asc" type="radio" name="sortType" value="ASC"
@@ -94,7 +94,24 @@
             </tbody>
         </table>
     </div>
+    <div class="col-lg-10 mt-5 mb-5">
+        <nav aria-label="Page navigation" class="paging">
+            <% int iter = 1; %>
+            <% HttpSession session1 = request.getSession(); %>
 
+            <ul class="pagination">
+                <% while (iter <= (int) session1.getAttribute("pages")) {%>
+                <li class="page-item">
+                    <a class="page-link"
+                       href="controller?command=courses&course=${course}&sortType=${sortType}&duration=${duration}&capacity=${capacity}&topic=${topic}&teacher=${teacher}&page=<%= iter%>"><%= iter%>
+                    </a>
+                </li>
+                <%iter++;%>
+                <%}%>
+            </ul>
+        </nav>
+
+    </div>
 </div>
 
 <script>

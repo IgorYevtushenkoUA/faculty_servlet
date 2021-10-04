@@ -10,6 +10,7 @@ import com.example.faculty.dao.model.impl.UserDaoImpl;
 import com.example.faculty.model.entity.Course;
 import com.example.faculty.model.entity.Teacher;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Comparator;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 import static com.example.faculty.controller.constant.Methods.getRole;
 
 public class ListCoursesCommand extends CommandFactory {
+
+    private static final int DEFAULT_ELEMS_ON_PAGE = 2;
 
     CourseDao courseDao = new CourseDaoImpl();
     TopicDao topicDao = new TopicDaoImpl();
@@ -33,12 +36,21 @@ public class ListCoursesCommand extends CommandFactory {
         String teacher = getParam(request.getParameter("teacher"));
         String courseId = (String) session.getAttribute("courseId");
         String sortType = getParam(request.getParameter("sortType"));
+        int page = getParam(request.getParameter("page"), 1);
         sortType = sortType.equals("") ? "ASC" : sortType;
 
 
+        List<Course> courses = findCourses(courseDao, course, duration, capacity, topic, teacher, sortType, topicDao, userDao);
+        int pages = (int) Math.ceil(courses.size() / DEFAULT_ELEMS_ON_PAGE);
+        session.setAttribute("pages", pages);
+
+        courses = courses.stream().skip((page - 1) * DEFAULT_ELEMS_ON_PAGE).limit(DEFAULT_ELEMS_ON_PAGE).collect(Collectors.toList());
+
+        setParam(course, duration, capacity, topic, teacher, sortType);
+        request.setAttribute("pages", pages);
         request.setAttribute("topics", topicDao.findAll());
         request.setAttribute("teachers", userDao.findAllTeacher());
-        request.setAttribute("courses", findCourses(courseDao, course, duration, capacity, topic, teacher, sortType, topicDao, userDao));
+        request.setAttribute("courses", courses);
         request.setAttribute("sortType", sortType);
         request.setAttribute("classes", setBtnClass(sortType));
         request.setAttribute("role", getRole(request));
@@ -49,17 +61,30 @@ public class ListCoursesCommand extends CommandFactory {
         return "WEB-INF/jsp/course.jsp";
     }
 
+    @Override
+    public String doPost() {
+        return "controller?command=courses";
+    }
+
     private String getParam(String param) {
         if (param == null || param.isEmpty())
             return "";
         return param;
     }
 
-    @Override
-    public String doPost() {
-        return "controller?command=courses";
+    private int getParam(String param, int defaultValue) {
+        if (param == null || param.isEmpty())
+            return defaultValue;
+        return Integer.parseInt(param);
     }
 
+    private void setParam(String course, String duration, String capacity, String topic, String teacher, String sortType) {
+        request.setAttribute("course", course);
+        request.setAttribute("duration", duration);
+        request.setAttribute("topic", topic);
+        request.setAttribute("teacher", teacher);
+        request.setAttribute("sortType", sortType);
+    }
 
     private List<Course> findCourses(CourseDao dao, String course, String duration, String capacity, String topic, String teacher, String sortType, TopicDao topicDao, UserDao userDao) {
 
