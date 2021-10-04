@@ -12,29 +12,45 @@
 <%@include file="/WEB-INF/jsp/components/navbar.jsp" %>
 
 <div class="container mt-5">
-    <form action="controller" method="post">
+    <form action="controller" method="post" validate(this)>
         <input type="hidden" name="command" value="login">
         <div class="input-group p-1">
-            <span class="input-group-text"><fmt:message key="login.email"/><fmt:message
-                    key="login.email"/></span>
-            <input type="email" class="form-control" name="email" placeholder="<fmt:message
+            <span class="input-group-text"><fmt:message key="login.email"/></span>
+            <input type="email" id="email" class="form-control" name="email" placeholder="<fmt:message
                     key="login.placeholder.email"/>">
         </div>
+<%--        <div id="emailErr" class="text-danger">--%>
+<%--            <span>${emailErr}</span>--%>
+<%--        </div>--%>
 
         <div class="input-group p-1">
-            <span class="input-group-text"><fmt:message key="login.password"/><fmt:message
-                    key="login.password"/></span>
-            <input type="password" class="form-control" name="password" placeholder="<fmt:message
-                    key="login.placeholder.password"/>">
+            <span class="input-group-text"><fmt:message key="login.password"/></span>
+            <input type="password" class="form-control" name="password" id="password"
+                   placeholder="<fmt:message key="login.placeholder.password"/>">
         </div>
 
-        <div>
+        <div class="text-danger" id="messages">
             <span>${messages}</span>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="login.login"/></button>
+        <button type="submit" onclick="validForm()" class="btn btn-primary btn-lg btn-block"><fmt:message
+                key="login.login"/></button>
     </form>
 </div>
+
+<script>
+    function validForm() {
+        var emailI = document.getElementById("email").value;
+        var passwordI = document.getElementById("password");
+        let emailPatter = /^[a-zA-Z0-9.]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*/;
+        if (emailPatter.test(emailI)) {
+            document.getElementById("messages").innerHTML = "<input type='hidden' name='messages' value='' />"
+        }else{
+            document.getElementById("messages").innerHTML = "<input type='hidden' name='messages' value='emailIncorrect' />"
+        }
+    }
+
+</script>
 
 </body>
 </html>
