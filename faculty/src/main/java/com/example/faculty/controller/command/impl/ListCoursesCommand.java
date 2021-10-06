@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.example.faculty.controller.constant.Methods.getRole;
@@ -25,9 +27,11 @@ public class ListCoursesCommand extends CommandFactory {
     CourseDao courseDao = new CourseDaoImpl();
     TopicDao topicDao = new TopicDaoImpl();
     UserDao userDao = new UserDaoImpl();
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
 
     @Override
     public String doGet() {
+        logger.log(Level.INFO, "Enter ListCoursesCommand doGet()");
         HttpSession session = request.getSession();
         String course = getParam(request.getParameter("course"));
         String duration = getParam(request.getParameter("duration"));
@@ -57,6 +61,8 @@ public class ListCoursesCommand extends CommandFactory {
 
         if (courseId == null || courseId.isEmpty())
             return "WEB-INF/jsp/courses.jsp";
+
+        logger.log(Level.INFO, "Leave ListCoursesCommand doGet()");
 
         return "WEB-INF/jsp/course.jsp";
     }

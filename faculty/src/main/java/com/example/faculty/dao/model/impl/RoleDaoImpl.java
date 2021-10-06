@@ -1,5 +1,6 @@
 package com.example.faculty.dao.model.impl;
 
+import com.example.faculty.controller.command.impl.LoginCommand;
 import com.example.faculty.dao.model.RoleDao;
 import com.example.faculty.db.ConnectionPool;
 import com.example.faculty.db.Queries;
@@ -12,18 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RoleDaoImpl implements RoleDao {
 
-    int i = 0;
-
-    private void prepareStatementForCreateRole(PreparedStatement ps, Role role) {
-        i = 1;
-        try {
-            ps.setString(i++, role.getName());
-        } catch (SQLException e) {
-        }
-    }
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
 
     private List<Role> parseResultSet(ResultSet rs) {
         List<Role> roles = new ArrayList<>();
@@ -35,6 +30,7 @@ public class RoleDaoImpl implements RoleDao {
                 roles.add(role);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "error in parseResultSet");
         }
         return roles;
     }
@@ -48,11 +44,11 @@ public class RoleDaoImpl implements RoleDao {
             stmt.setInt(1, id);
             role = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findById");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findById");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findById");
         }
         return role;
     }
@@ -65,11 +61,11 @@ public class RoleDaoImpl implements RoleDao {
             stmt.setString(1, name);
             role = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findByName");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findByName");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findByName");
         }
         return role;
     }

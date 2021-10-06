@@ -1,26 +1,31 @@
 package com.example.faculty.controller.command.impl;
 
 import com.example.faculty.controller.command.CommandFactory;
-import com.example.faculty.controller.constant.PageConstants;
-import com.example.faculty.controller.constant.PathConstants;
 import com.example.faculty.dao.model.UserDao;
 import com.example.faculty.dao.model.impl.UserDaoImpl;
 import com.example.faculty.model.entity.Student;
 import com.example.faculty.model.entity.User;
 
-import javax.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.example.faculty.controller.constant.Methods.getRole;
 
 public class RegisterCommand extends CommandFactory {
+
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
+
     @Override
     public String doGet() {
+        logger.log(Level.INFO, "Enter RegisterCommand doGet()");
         request.setAttribute("role", getRole(request));
-        return PageConstants.REGISTER;
+        logger.log(Level.INFO, "Leave RegisterCommand doGet()");
+        return "WEB-INF/jsp/registration.jsp";
     }
 
     @Override
     public String doPost() {
+        logger.log(Level.INFO, "Enter RegisterCommand doPost()");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String secondName = request.getParameter("secondName");
@@ -36,10 +41,9 @@ public class RegisterCommand extends CommandFactory {
 
         User user = new User(firstName, lastName, secondName, email, password, 3);
         user = userDao.saveUser(user);
-        System.out.println(user);
         Student student = new Student(user, Integer.parseInt(course));
         userDao.saveStudent(student);
-        System.out.println(student);
+        logger.log(Level.INFO, "Leave RegisterCommand doPost()");
         return "controller?command=login";
     }
 }

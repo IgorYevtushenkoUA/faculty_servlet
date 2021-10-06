@@ -13,6 +13,7 @@ public class CommandInvoker {
 
     private static Map<String, CommandCreate> commands = new HashMap<>();
 
+
     static {
         commands.put("", LogoutCommand::new);
         // guest

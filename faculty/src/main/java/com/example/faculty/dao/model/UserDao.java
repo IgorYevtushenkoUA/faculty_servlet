@@ -25,8 +25,6 @@ public interface UserDao {
 
     List<Student> findAllStudent();
 
-    Student findStudentInfoBydAndCourse(int id, int courseId);
-
     Student findStudentById(int id);
 
     List<Student> findAllStudentsByPIB(String name);
@@ -34,7 +32,5 @@ public interface UserDao {
     List<StudentShortInfoDto> findAllEnrolledStudentToCourse(int courseId);
 
     void updateStudent(Student student);
-
-    void updateTeacher(Teacher teacher);
 
 }

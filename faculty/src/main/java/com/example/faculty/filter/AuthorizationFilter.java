@@ -1,19 +1,14 @@
 package com.example.faculty.filter;
 
-import com.example.faculty.controller.constant.PageConstants;
 import com.example.faculty.dao.model.*;
 import com.example.faculty.dao.model.impl.*;
-import com.example.faculty.model.entity.Course;
-import com.example.faculty.model.entity.Teacher;
 import com.example.faculty.model.enums.ROLE;
-import com.example.faculty.model.enums.STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AuthorizationFilter implements Filter {
 
@@ -65,7 +60,7 @@ public class AuthorizationFilter implements Filter {
         } else {
             String errorMessage = "You do not have permission to access the requested command!";
             servletRequest.setAttribute("error_message", errorMessage);
-            servletRequest.getRequestDispatcher(PageConstants.ERROR).forward(servletRequest, servletResponse);
+            servletRequest.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
         }
     }
 

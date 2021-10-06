@@ -1,5 +1,6 @@
 package com.example.faculty.dao.model.impl;
 
+import com.example.faculty.controller.command.impl.LoginCommand;
 import com.example.faculty.dao.model.UserDao;
 import com.example.faculty.db.ConnectionPool;
 import com.example.faculty.db.Queries;
@@ -12,9 +13,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserDaoImpl implements UserDao {
 
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
     private int i = 0;
 
     private void prepareStatementForCreateUser(PreparedStatement ps, User user) {
@@ -27,7 +31,7 @@ public class UserDaoImpl implements UserDao {
             ps.setString(i++, user.getPassword());
             ps.setInt(i++, user.getRoleId());
         } catch (SQLException e) {
-
+            logger.log(Level.WARNING, "Error in prepareStatementForCreateUser");
         }
     }
 
@@ -38,6 +42,7 @@ public class UserDaoImpl implements UserDao {
             ps.setInt(i++, student.getCourseNum());
             ps.setBoolean(i++, true);
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "SQLException in prepareStatementForCreateStudent");
         }
     }
 
@@ -47,6 +52,7 @@ public class UserDaoImpl implements UserDao {
             ps.setBoolean(i++, student.isEnable());
             ps.setInt(i++, student.getId());
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "SQLException in prepareStatementForUpdateStudent");
         }
     }
 
@@ -55,7 +61,7 @@ public class UserDaoImpl implements UserDao {
         try {
             stmt.setInt(i++, teacher.getId());
         } catch (SQLException e) {
-
+            logger.log(Level.WARNING, "SQLException in prepareStatementForCreateTeacher");
         }
     }
 
@@ -74,6 +80,7 @@ public class UserDaoImpl implements UserDao {
                 list.add(user);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "SQLException in parseResultSet");
         }
         return list;
     }
@@ -95,6 +102,7 @@ public class UserDaoImpl implements UserDao {
                 list.add(student);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "SQLException in parseStudentResultSet");
         }
         return list;
     }
@@ -117,6 +125,7 @@ public class UserDaoImpl implements UserDao {
                 list.add(studentDto);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "SQLException in parseStudentDtoResultSet");
         }
         return list;
     }
@@ -136,23 +145,9 @@ public class UserDaoImpl implements UserDao {
                 list.add(t);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "SQLException in parseTeacherResultSetFor");
         }
         return list;
-    }
-
-
-    // todo here code is duplicate with create [think]
-    public void prepareStatementForUpdate(PreparedStatement ps, User user) {
-        i = 1;
-        try {
-            ps.setString(i++, user.getFirstName());
-            ps.setString(i++, user.getSecondName());
-            ps.setString(i++, user.getLastName());
-            ps.setString(i++, user.getEmail());
-            ps.setString(i++, user.getPassword());
-            ps.setInt(i++, user.getRoleId());
-        } catch (SQLException e) {
-        }
     }
 
     @Override
@@ -163,11 +158,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(1, email);
             user = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findByEmail");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findByEmail");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findByEmail");
         }
         return user;
     }
@@ -180,11 +175,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(1, id);
             user = parseResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findByEmail");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findByEmail");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findByEmail");
         }
         return user;
     }
@@ -201,11 +196,11 @@ public class UserDaoImpl implements UserDao {
                 user.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in saveUser");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in saveUser");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in saveUser");
         }
         return user;
     }
@@ -217,11 +212,11 @@ public class UserDaoImpl implements UserDao {
             prepareStatementForCreateStudent(stmt, student);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in saveStudent");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in saveStudent");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in saveStudent");
         }
         return student;
     }
@@ -233,11 +228,11 @@ public class UserDaoImpl implements UserDao {
             prepareStatementForCreateTeacher(stmt, teacher);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in saveTeacher");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in saveTeacher");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in saveTeacher");
         }
         return teacher;
     }
@@ -250,11 +245,11 @@ public class UserDaoImpl implements UserDao {
             ps.setString(1, name);
             teachers = parseTeacherResultSetFor(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findAllTeachersByPIB");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findAllTeachersByPIB");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findAllTeachersByPIB");
         }
         return teachers;
     }
@@ -266,11 +261,11 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_TEACHERS)) {
             teachers = parseTeacherResultSetFor(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findAllTeacher");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findAllTeacher");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findAllTeacher");
         }
         return teachers;
     }
@@ -282,18 +277,13 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_STUDENTS)) {
             students = parseStudentResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findAllStudent");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findAllStudent");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findAllStudent");
         }
         return students;
-    }
-
-    @Override
-    public Student findStudentInfoBydAndCourse(int id, int courseId) {
-        return null;
     }
 
     @Override
@@ -304,11 +294,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(1, id);
             student = parseStudentResultSet(stmt.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findStudentById");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findStudentById");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findStudentById");
         }
         return student;
     }
@@ -321,11 +311,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(1, name);
             students = parseStudentResultSet(stmt.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findAllStudentsByPIB");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findAllStudentsByPIB");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findAllStudentsByPIB");
         }
         return students;
     }
@@ -338,11 +328,11 @@ public class UserDaoImpl implements UserDao {
             stmt.setInt(1, courseId);
             students = parseStudentDtoResultSet(stmt.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findAllEnrolledStudentToCourse");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findAllEnrolledStudentToCourse");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findAllEnrolledStudentToCourse");
         }
         return students;
     }
@@ -354,16 +344,12 @@ public class UserDaoImpl implements UserDao {
             prepareStatementForUpdateStudent(ps, student);
             parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in updateStudent");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in updateStudent");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in updateStudent");
         }
     }
 
-    @Override
-    public void updateTeacher(Teacher teacher) {
-
-    }
 }

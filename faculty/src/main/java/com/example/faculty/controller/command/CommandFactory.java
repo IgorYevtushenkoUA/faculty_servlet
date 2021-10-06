@@ -1,14 +1,11 @@
 package com.example.faculty.controller.command;
 
-import com.example.faculty.controller.constant.PageConstants;
 import com.example.faculty.model.enums.ACTION;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class CommandFactory implements ICommand {
 
@@ -31,7 +28,7 @@ public abstract class CommandFactory implements ICommand {
     public final String execute() throws ServletException {
         if (action == null) {
             System.out.println("action is null");
-            return PageConstants.COURSES;
+            return "WEB-INF/jsp/courses.jsp";
         } else if (action == ACTION.GET) {
             return doGet();
         } else {

@@ -1,5 +1,6 @@
 package com.example.faculty.dao.model.impl;
 
+import com.example.faculty.controller.command.impl.LoginCommand;
 import com.example.faculty.dao.model.StudentHasCourseDao;
 import com.example.faculty.db.ConnectionPool;
 import com.example.faculty.db.Queries;
@@ -9,33 +10,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
 
-    int i = 1;
-
-    private void prepareStatementForCreate(PreparedStatement ps, StudentHasCourse shc) {
-        i = 1;
-        try {
-            ps.setInt(i++, shc.getStudentId());
-            ps.setInt(i++, shc.getCourseId());
-            ps.setInt(i++, shc.getStatusId());
-            ps.setInt(i++, shc.getMark());
-            ps.setTimestamp(i++, shc.getRecordingTime());
-        } catch (SQLException e) {
-        }
-    }
-
-    private void prepareStatementForUpdate(PreparedStatement ps, StudentHasCourse shc) {
-        i = 1;
-        try {
-            ps.setInt(i++, shc.getMark());
-        } catch (SQLException e) {
-        }
-    }
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
 
     private List<StudentHasCourse> parseResultSet(ResultSet rs) {
-        i = 1;
         List<StudentHasCourse> list = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -48,6 +30,7 @@ public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
                 list.add(shc);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "Error in parseResultSet");
         }
         return list;
     }
@@ -61,15 +44,14 @@ public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
             ps.setInt(3, courseId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in update");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "Error in update");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in update");
         }
     }
 
-    // todo
     @Override
     public void enrollStudent(int studentId, int courseId) {
         try (Connection connection = ConnectionPool.getConnection();
@@ -80,15 +62,14 @@ public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.executeQuery();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in enrollStudent");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "Error in enrollStudent");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in enrollStudent");
         }
     }
 
-    // todo
     @Override
     public void dropOutStudent(int studentId, int courseId) {
         try (Connection connection = ConnectionPool.getConnection();
@@ -97,11 +78,11 @@ public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
             ps.setInt(2, courseId);
             ps.executeQuery();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in dropOutStudent");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "Error in dropOutStudent");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in dropOutStudent");
         }
     }
 
@@ -114,11 +95,11 @@ public class StudentHasCourseDaoImpl implements StudentHasCourseDao {
             ps.setInt(2, courseId);
             list = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in isStudentEnrolled");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "Error in isStudentEnrolled");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in isStudentEnrolled");
         }
         return !list.isEmpty();
     }

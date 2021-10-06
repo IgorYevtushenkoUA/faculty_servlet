@@ -1,5 +1,6 @@
 package com.example.faculty.dao.model.impl;
 
+import com.example.faculty.controller.command.impl.LoginCommand;
 import com.example.faculty.dao.model.TopicDao;
 import com.example.faculty.db.ConnectionPool;
 import com.example.faculty.db.Queries;
@@ -12,21 +13,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TopicDaoImpl implements TopicDao {
 
-    int i = 1;
-
-    private void prepareStatementForCreateTopic(PreparedStatement ps, Topic topic) {
-        i = 1;
-        try {
-            ps.setString(i++, topic.getName());
-        } catch (SQLException e) {
-        }
-    }
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
 
     private List<Topic> parseResultSet(ResultSet rs) {
-        i = 1;
         List<Topic> list = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -36,6 +30,7 @@ public class TopicDaoImpl implements TopicDao {
                 list.add(topic);
             }
         } catch (SQLException e) {
+            logger.log(Level.WARNING, "Error in parseResultSet");
         }
         return list;
     }
@@ -48,11 +43,11 @@ public class TopicDaoImpl implements TopicDao {
             ps.setString(1, name);
             topic = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findByName");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findByName");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findByName");
         }
         return topic;
     }
@@ -64,11 +59,11 @@ public class TopicDaoImpl implements TopicDao {
              PreparedStatement ps = connection.prepareStatement(Queries.SELECT_ALL_TOPICS)) {
             list = parseResultSet(ps.executeQuery());
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findAll");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findAll");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findAll");
         }
         return list;
     }
@@ -81,11 +76,11 @@ public class TopicDaoImpl implements TopicDao {
             ps.setInt(1, id);
             topic = parseResultSet(ps.executeQuery()).iterator().next();
         } catch (SQLException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "SQLException in findById");
         } catch (NullPointerException e) {
-            System.out.println("NullPointerException e");
+            logger.log(Level.WARNING, "NullPointerException in findById");
         } catch (NoSuchElementException e) {
-            System.out.println(e);
+            logger.log(Level.WARNING, "NoSuchElementException in findById");
         }
         return topic;
     }

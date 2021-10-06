@@ -1,8 +1,5 @@
 package com.example.faculty.controller.command;
 
-import com.example.faculty.controller.command.CommandFactory;
-import com.example.faculty.controller.command.CommandInvoker;
-import com.example.faculty.controller.constant.PageConstants;
 import com.example.faculty.model.enums.ACTION;
 
 import java.io.*;
@@ -33,7 +30,7 @@ public class Servlet extends HttpServlet {
             String path = command.execute();
             request.getSession().setAttribute("last_command", command);
             if (path == null) {
-                response.sendRedirect(PageConstants.COURSES);
+                response.sendRedirect("WEB-INF/jsp/courses.jsp");
             } else if (action == ACTION.GET) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher(path);
                 dispatcher.forward(request, response);

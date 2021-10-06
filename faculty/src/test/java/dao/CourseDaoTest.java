@@ -6,22 +6,39 @@ import com.example.faculty.model.entity.Course;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+
 public class CourseDaoTest {
-    private CourseDao courseDao;
+
+    Course course;
+
+    CourseDao courseDao;
 
     @Before
     public void setUpt() {
         this.courseDao = new CourseDaoImpl();
+        course = new Course();
+        course.setId(1);
+        course.setTopicId(1);
+        course.setCapacity(30);
+        course.setSemesterStart(2);
+        course.setSemesterDuration(1);
+        course.setDescription("This subject shows how computer works");
+        course.setTeacherId(1);
+        course.setName("Computer design");
     }
 
     @Test
     public void getAllCourse_Should_Return_True() {
-        List<Course> courses = courseDao.findAll();
-        Assert.assertTrue(!courses.isEmpty());
+        Course c = courseDao.findById(1);
+        Assert.assertNotNull(c);
     }
 
     @Test

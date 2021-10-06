@@ -8,6 +8,8 @@ import com.example.faculty.model.entity.User;
 import com.example.faculty.model.enums.ROLE;
 
 import javax.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class CourseInfoCommand extends CommandFactory {
@@ -17,37 +19,41 @@ public class CourseInfoCommand extends CommandFactory {
     TopicDao topicDao = new TopicDaoImpl();
     RoleDao roleDao = new RoleDaoImpl();
     StudentHasCourseDao studentHasCourseDao = new StudentHasCourseDaoImpl();
+    Logger logger = Logger.getLogger(LoginCommand.class.getName());
 
 
     @Override
     public String doGet() {
+        logger.log(Level.INFO, "Enter CourseInfoCommand doGet()");
 
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-
         Course course = courseDao.findById(courseId);
-
         request.setAttribute("course", course);
         request.setAttribute("topic", topicDao.findById(course.getTopicId()));
         request.setAttribute("studentDto", userDao.findAllEnrolledStudentToCourse(courseId));
         request.setAttribute("role", getRole(courseId));
-        //        Teacher teacher = course.getTeacherId() != null
-//                ? userDao.findTeacherById(course.getTeacherId())
-//                : null;
+
+        logger.log(Level.INFO, "Leave CourseInfoCommand doGet()");
 
         return "WEB-INF/jsp/courseInfo.jsp";
     }
 
     @Override
     public String doPost() {
+        logger.log(Level.INFO, "Enter CourseInfoCommand doPost()");
+
         String action = request.getParameter("action");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int studentId = Integer.parseInt(request.getParameter("studentId"));
 
         if (action.equals("enroll")) {
+            logger.log(Level.INFO, "Student enroll course");
             studentHasCourseDao.enrollStudent(studentId, courseId);
         } else if (action.equals("drop_out")) {
+            logger.log(Level.INFO, "Student drop out from course");
             studentHasCourseDao.dropOutStudent(studentId, courseId);
         }
+        logger.log(Level.INFO, "Leave CourseInfoCommand doPost()");
         return "controller?command=course&courseId=" + courseId;
     }
 
